@@ -67,11 +67,9 @@
           >
           <template slot-scope="scope">
             <router-link :to="`/task/edit/${scope.row.id}`">
-              <el-button type="success" size="small">编辑</el-button>
+              <el-button type="success" size="small" @click="setCurrent(row)">编辑</el-button>
             </router-link>
             <el-button type="danger" size="small" @click="removeUser(scope.$index+1, scope.row)">删除</el-button>
-              <!-- <el-button type="success" size="small" @click="setCurrent(scope.row)">编辑</el-button> -->
-              <!-- <el-button type="info" size="small">查看详情</el-button> -->
           </template>
       </el-table-column>
     </el-table>
@@ -158,19 +156,6 @@ export default {
         this.getUsers();
       });
     },
-    // setCurrent(row) {
-    //   console.log(row.id);
-    //   this.$router.push(`task/edit/${id}`);
-    // },
-    // setCurrent(user) {
-    //   this.currentId = user.id;
-    //   this.update.performer = user.performer;
-    //   this.update.title = user.title;
-    //   this.update.description = user.description;
-    //   this.update.begintime = user.begintime;
-    //   this.update.endtime = user.endtime;
-    //   this.update.state = user.state;
-    // },
     filterNode(value, data) {
       if (!value) return true
       return data.label.indexOf(value) !== -1

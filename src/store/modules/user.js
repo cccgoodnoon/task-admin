@@ -35,8 +35,8 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
+        setToken(data.token)    //在auth.js封装了setToken，登录成功后将token存储在cookie之中
+        resolve()        //token有效期是Session，就是当浏览器关闭了就丢失了
       }).catch(error => {
         reject(error)
       })
