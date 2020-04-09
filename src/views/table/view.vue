@@ -38,7 +38,7 @@ import api from "../../utils/auth"
 export default {
     data() {
         return {
-            user:{},
+            user:[],
         }
     },
     mounted(){

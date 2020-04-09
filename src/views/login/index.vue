@@ -75,7 +75,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '123123'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -110,7 +110,8 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })  //登录成功之后重定向到首页
+            console.log('登录成功')
+            this.$router.push({ path: this.redirect || '/' })   // 登录成功之后重定向到首页
             this.loading = false
           }).catch(() => {
             this.loading = false

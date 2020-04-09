@@ -9,12 +9,13 @@
       </div>
       <div  class="actions">
 				<el-input size="small"
-				    v-model="searchTxt"
+				    v-model="queryString"
 				    placeholder="请输入搜索内容"
-				    prefix-icon="el-icon-search" 
-            :filter-node-method="filterNode"
-            width="200px"/>
+				    prefix-icon="el-icon-search"            
+            width="200px"/> 
 			</div>
+      <el-button size="small"
+						type="primary" @click="querySearchAsync(queryString)" >搜索</el-button>
 		</div>
     <el-table
       v-loading="listLoading"
@@ -23,6 +24,7 @@
       border
       fit
       highlight-current-row
+
     >
       <el-table-column label="ID" prop="id" align="center" width="120">
 				<template slot-scope="scope">
@@ -106,19 +108,23 @@ export default {
     return {
       users: [],
       row:null,
-      searchTxt: null,
+      queryString: null,
       listLoading: true
     }
   },
-
+  // watch: {
+  //   filterText(val) {
+  //     this.$refs.users.filter(val)
+  //   }
+  // },
   mounted(){
     this.getUsers();
   },
   methods: {
     // 重置表单
-    reset() {
-        this.$refs.create.resetFields();
-    },
+    // reset() {
+    //     this.$refs.users.resetFields();
+    // },
     getUsers(){
         this.listLoading = true
         let self = this
@@ -156,10 +162,22 @@ export default {
         this.getUsers();
       });
     },
-    filterNode(value, data) {
-      if (!value) return true
-      return data.label.indexOf(value) !== -1
+
+    querySearchAsync(queryString) {
+        let self = this
+        api._gets(queryString).then(res =>{
+            console.log(res);
+            self.users = res;
+            console.log(self.users);
+        }).catch((err)=>{
+          console.log(err);
+        })
     },
+    // filterNode(value, data) {
+    //   if (!value) 
+    //     return true
+    //   return data.title.indexOf(value) !== -1
+    // },
   }
 }
 </script>

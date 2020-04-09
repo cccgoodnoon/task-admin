@@ -52,7 +52,7 @@ export const constantRoutes = [
   {
     path: '',
     component: Layout,
-    // redirect: '/dashboard',
+    // redirect: '/',
     children: [{
       path: 'dashboard',
       name: '',
@@ -93,7 +93,7 @@ export const constantRoutes = [
 				meta: { title: "任务详情", icon: "fa fa-list-alt" },
 				component: () => import("@/views/table/view"),
 				hidden:true
-			},
+			}
     ]
   },
 

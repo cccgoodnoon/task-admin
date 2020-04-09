@@ -33,11 +33,17 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)    //在auth.js封装了setToken，登录成功后将token存储在cookie之中
-        resolve()        //token有效期是Session，就是当浏览器关闭了就丢失了
+        const data = response    // 返回字典{users：{},token: }
+        // const { data } = response
+        console.log("拿到token")
+        // commit('SET_TOKEN', data.token)
+        commit('SET_TOKEN', data['token'])      
+        // setToken(data.token)    // 在auth.js封装了setToken，登录成功后将token存储在cookie之中
+        setToken(data['token'])
+        console.log("成功把token放到cookie中")
+        resolve()     // token有效期是Session，就是当浏览器关闭了就丢失了
       }).catch(error => {
+        console.log("登录失败");        
         reject(error)
       })
     })
@@ -47,7 +53,8 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
-        const { data } = response
+        // const { data } = response
+        const data = response
 
         if (!data) {
           reject('Verification failed, please Login again.')
