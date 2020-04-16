@@ -52,12 +52,12 @@ export const constantRoutes = [
   {
     path: '',
     component: Layout,
-    // redirect: '/',
+    redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: '',
+      // name: '',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '主页'}
+      meta: { title: '主页',icon: 'tree'}
     }]
   },
 
@@ -184,7 +184,8 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
+  base: '/openedu/admin/',
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
