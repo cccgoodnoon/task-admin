@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
+const whiteList = ['/login','/register'] // no redirect whitelist
 
 //用户登录成功之后，在全局钩子router.beforeEach中拦截路由
 router.beforeEach(async(to, from, next) => {

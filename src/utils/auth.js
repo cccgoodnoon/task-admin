@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie'
 import axios from 'axios'
+// import qs from 'qs'
+
 
 const TokenKey = 'vue_admin_template_token'
 
@@ -32,7 +34,6 @@ axios.interceptors.request.use((config) => {
 })  
 // 返回状态判断
 axios.interceptors.response.use((res) => {
-  // console.log(res)
   return res
 }, (error) => {
   return Promise.reject(error)
@@ -60,7 +61,8 @@ export const oPost = (url, params) => {
       }, err => {
         reject(err)
       }).catch(err => {
-        reject(err)
+        // reject(err)
+        return Promise.reject(err);
       })
   })
 }
@@ -115,5 +117,11 @@ export default {
   // 批量删除
   _removes(param){
     return oRemove('http://127.0.0.1:5000/rest/anon/tasks/' + param)
+  },
+  _register(params) {
+    return oPost('http://120.26.39.25:8081/idm/auth/register/email',params)
+  },
+  _getv(){
+    return oGet('http://120.26.39.25:8081/idm/auth/captcha')
   }
 }
