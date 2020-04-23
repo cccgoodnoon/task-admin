@@ -44,7 +44,7 @@ export const oGet = (url, params) => {
   return new Promise((resolve, reject) => {
     axios.get(url, params)
       .then(res => {
-        resolve(res.data)
+        resolve(res)
       }, err => {
         reject(err)
       }).catch(err => {
