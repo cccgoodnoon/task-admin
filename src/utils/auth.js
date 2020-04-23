@@ -98,30 +98,30 @@ export const oRemove = (url, params) => {
 export default {
   _get() {
     // return oGet('http://127.0.0.1:5000/rest/anon/tasks');
-    return oGet('http://127.0.0.1:5000/api/admin/tasks')
+    return oGet('http://47.111.234.116:8080/api/admin/tasks')
   },
   _gets(params) {
-    return oGet('http://127.0.0.1:5000/api/admin/tasks/' + params)
+    return oGet('http://47.111.234.116:8080/api/admin/tasks/' + params)
   },  
   _post(params) {
-    return oPost('http://127.0.0.1:5000/api/admin/task/new',params)
+    return oPost('http://47.111.234.116:8080/api/admin/task/new',params)
   },  
   _update(id, param) {
-    return oUpdate('http://127.0.0.1:5000/api/admin/tasks/v/' + id, param)
+    return oUpdate('http://47.111.234.116:8080/api/admin/tasks/v/' + id, param)
   },
   // 删除单个用户
   _remove(user){
     var userid = user.id;
-    return oRemove('http://127.0.0.1:5000/api/admin/tasks/e/' + userid)     
+    return oRemove('http://47.111.234.116:8080/api/admin/tasks/e/' + userid)     
   },
   // 批量删除
-  _removes(param){
-    return oRemove('http://127.0.0.1:5000/rest/anon/tasks/' + param)
-  },
-  _register(params) {
-    return oPost('http://120.26.39.25:8081/idm/auth/register/email',params)
-  },
-  _getv(){
-    return oGet('http://120.26.39.25:8081/idm/auth/captcha')
-  }
+  // _removes(param){
+  //   return oRemove('http://47.111.234.116:8080/rest/anon/tasks/' + param)
+  // },
+  // _register(params) {
+  //   return oPost('http://120.26.39.25:8081/idm/auth/register/email',params)
+  // },
+  // _getv(){
+  //   return oGet('http://120.26.39.25:8081/idm/auth/captcha')
+  // }
 }
