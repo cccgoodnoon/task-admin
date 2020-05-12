@@ -102,7 +102,7 @@ export default {
       loginRules: {
         email: [{ required: true, trigger: 'blur'}],
         // username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur'}]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
@@ -140,6 +140,7 @@ export default {
             this.$router.push({ path: this.redirect || '/' })   // 登录成功之后重定向到首页
             this.loading = false
           }).catch(() => {
+            this.$message.error('用户名或密码错误');
             this.loading = false
           })
         } else {

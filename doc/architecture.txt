@@ -1,0 +1,20 @@
+整个程序分两层
+
+UI层：由大量vue的component组成，主要在views文件夹下
+Service层（服务层）：由大量js模块组成。其中appservice是获得其它服务层对象的主对象，可以通过调用它的方法获得其它对象的实例，会完成合理的初始化。
+
+service文件夹是我们新增的，原vue-element-template没有。
+
+service层主要采用对象写法，对外输出的变量很少，只有：
+- avc: AppService对象的实例，便于上层直接使用
+
+
+它和原utils的关系是：
+- utils中应仅仅包含一些不依赖于其它文件夹的工具性模块、对象和方法，当然应该也能为service层代码所使用。所以service层的层次高于utils。不应让utils代码依赖service层代码。
+- utils的地位类似service中的foundation.js和common.js。
+
+它和原store的关系是：
+- store的价值更大的是为了支持vue UI层，我们的service层更加灵活、轻量、易于控制初始化，且兼顾和服务端以及更复杂的业务逻辑扩展方便性。
+- store可以调用service层代码，但不要service层去调用store代码。所以store的层次地位高于service。但是store是可以被跳过的，即UI层代码直接跳过store，并且直接调用service对象和方法。
+
+

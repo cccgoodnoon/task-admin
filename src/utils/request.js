@@ -47,8 +47,8 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log(response['token'], 888)
-    
+    // console.log(response['token'], 888)
+    console.log(res['token'], 777)
     // if the custom code is not 20000, it is judged as an error.
     if (response.status !== 200) {
       Message({

@@ -36,6 +36,7 @@ const actions = {
         const data = response    // 返回字典{users：{},token: }
         // const { data } = response
         console.log("拿到token")
+        console.log(data['token'])
         // commit('SET_TOKEN', data.token)
         commit('SET_TOKEN', data['token'])      
         // setToken(data.token)    // 在auth.js封装了setToken，登录成功后将token存储在cookie之中

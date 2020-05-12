@@ -44,7 +44,7 @@ export const oGet = (url, params) => {
   return new Promise((resolve, reject) => {
     axios.get(url, params)
       .then(res => {
-        resolve(res)
+        resolve(res.data)
       }, err => {
         reject(err)
       }).catch(err => {
@@ -98,21 +98,21 @@ export const oRemove = (url, params) => {
 export default {
   _get() {
     // return oGet('http://127.0.0.1:5000/rest/anon/tasks');
-    return oGet('http://47.111.234.116:8080/api/admin/tasks')
+    return oGet('http://127.0.0.1:5000/api/admin/tasks')
   },
   _gets(params) {
-    return oGet('http://47.111.234.116:8080/api/admin/tasks/' + params)
+    return oGet('http://127.0.0.1:5000/api/admin/tasks/' + params)
   },  
   _post(params) {
-    return oPost('http://47.111.234.116:8080/api/admin/task/new',params)
+    return oPost('http://127.0.0.1:5000/api/admin/tasks/new',params)
   },  
   _update(id, param) {
-    return oUpdate('http://47.111.234.116:8080/api/admin/tasks/v/' + id, param)
+    return oUpdate('http://127.0.0.1:5000/api/admin/tasks/v/' + id, param)
   },
   // 删除单个用户
   _remove(user){
     var userid = user.id;
-    return oRemove('http://47.111.234.116:8080/api/admin/tasks/e/' + userid)     
+    return oRemove('http://127.0.0.1:5000/api/admin/tasks/e/' + userid)     
   },
   // 批量删除
   // _removes(param){

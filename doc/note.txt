@@ -1,0 +1,15 @@
+modified by zhangwei on 2020.04.25
+- Copied some files in the service folder from the openedu-anon application in to the service folder of openedu-admin project.
+- add "conf/config.js". 
+
+
+modified by zhangwei on 2020.04.11
+- Add service folder. This folders contains the local application services.  These services encapsulate the operations (such as CRUD) and the communication details with the backend. The backend can be a remote restful server or even a local storage for testing purpose.
+
+attention: The application are divided into two major layers: service and view.  If there's vuex existed, you can regarded the layer organization is as the following:
+	view --> vuex store --> service 
+or
+	view --> vuex store
+or 
+	view --> service
+     
