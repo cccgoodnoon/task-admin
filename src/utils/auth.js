@@ -97,31 +97,67 @@ export const oRemove = (url, params) => {
 
 export default {
   _get() {
-    // return oGet('http://127.0.0.1:5000/rest/anon/tasks');
     return oGet('http://127.0.0.1:5000/api/admin/tasks')
   },
+
   _gets(params) {
     return oGet('http://127.0.0.1:5000/api/admin/tasks/' + params)
-  },  
+  }, 
+
   _post(params) {
-    return oPost('http://127.0.0.1:5000/api/admin/tasks/new',params)
-  },  
+    return oPost('http://127.0.0.1:5000/api/admin/task/new',params)
+  }, 
+
   _update(id, param) {
     return oUpdate('http://127.0.0.1:5000/api/admin/tasks/v/' + id, param)
   },
-  // 删除单个用户
+
   _remove(user){
     var userid = user.id;
     return oRemove('http://127.0.0.1:5000/api/admin/tasks/e/' + userid)     
   },
-  // 批量删除
-  // _removes(param){
-  //   return oRemove('http://47.111.234.116:8080/rest/anon/tasks/' + param)
-  // },
-  // _register(params) {
-  //   return oPost('http://120.26.39.25:8081/idm/auth/register/email',params)
-  // },
-  // _getv(){
-  //   return oGet('http://120.26.39.25:8081/idm/auth/captcha')
-  // }
+
+// ------------------------------------------
+
+  _getM () {
+    return oGet('http://127.0.0.1:5000/api/u/member');
+  },
+  _getOM (id) {
+    return oGet('http://127.0.0.1:5000/api/u/member/'+ id);
+  },
+  _getC () {
+    return oGet('http://127.0.0.1:5000/api/u/course');
+  },
+
+  _getOC (id) {
+    return oGet('http://127.0.0.1:5000/api/u/course/'+ id);
+  },
+  _getA (id) {
+    return oGet('http://127.0.0.1:5000/api/u/activity/'+ id);
+  },
+
+  _posta(params) {
+    return oPost('http://127.0.0.1:5000/api/u/activity',params);
+  },
+
+  _updatea (id, param) {
+    return oUpdate('http://127.0.0.1:5000/api/u/activity/state/'+ id, param);
+    
+  },
+
+  _removea(uuid){      
+    return oRemove('http://127.0.0.1:5000/api/u/activity/'+ uuid);    
+  },
+
+
+  // -----------------------------------------------------------
+  _geta () {
+    return oGet('http://127.0.0.1:5000/api/u/activity');
+  },
+  _getReport2 () {
+      return 'http://127.0.0.1:5000/api/u/export/report2';
+  },
+  _getReport3 () {
+      return 'http://127.0.0.1:5000//api/u/export/report3';
+  }, 
 }

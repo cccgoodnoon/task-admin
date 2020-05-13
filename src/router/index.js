@@ -75,19 +75,19 @@ export const constantRoutes = [
       {
         path: 'task/list',
         name: '任务列表',
-        component: () => import('@/views/table/list'),
+        component: () => import('@/views/task/list'),
         meta: { title: '任务列表', icon: 'table' }
       },
       {
         path: 'task/create',
         name: '创建任务',
-        component: () => import('@/views/table/create'),
+        component: () => import('@/views/task/create'),
         meta: { title: '创建任务', icon: 'form' }
       },
       {
         path: 'task/edit/:id',
         name: '修改任务',
-        component: () => import('@/views/table/edit'),
+        component: () => import('@/views/task/edit'),
         meta: { title: '修改任务', icon: 'el-icon-s-order' },
         hidden:true
       },
@@ -95,93 +95,43 @@ export const constantRoutes = [
 				path: "task/view/:id", 
 				name: "任务详情",
 				meta: { title: "任务详情", icon: "fa fa-list-alt" },
-				component: () => import("@/views/table/view"),
+				component: () => import("@/views/task/view"),
 				hidden:true
 			}
     ]
   },
-
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
-
-  // {
-  //   path: '/nested',
-  //   component: Layout,
-  //   redirect: '/nested/menu1',
-  //   name: 'Nested',
-  //   meta: {
-  //     title: 'Nested',
-  //     icon: 'nested'
-  //   },
-  //   children: [
-  //     {
-  //       path: 'menu1',
-  //       component: () => import('@/views/nested/menu1/index'), // Parent router-view
-  //       name: 'Menu1',
-  //       meta: { title: 'Menu1' },
-  //       children: [
-  //         {
-  //           path: 'menu1-1',
-  //           component: () => import('@/views/nested/menu1/menu1-1'),
-  //           name: 'Menu1-1',
-  //           meta: { title: 'Menu1-1' }
-  //         },
-  //         {
-  //           path: 'menu1-2',
-  //           component: () => import('@/views/nested/menu1/menu1-2'),
-  //           name: 'Menu1-2',
-  //           meta: { title: 'Menu1-2' },
-  //           children: [
-  //             {
-  //               path: 'menu1-2-1',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-  //               name: 'Menu1-2-1',
-  //               meta: { title: 'Menu1-2-1' }
-  //             },
-  //             {
-  //               path: 'menu1-2-2',
-  //               component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-  //               name: 'Menu1-2-2',
-  //               meta: { title: 'Menu1-2-2' }
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           path: 'menu1-3',
-  //           component: () => import('@/views/nested/menu1/menu1-3'),
-  //           name: 'Menu1-3',
-  //           meta: { title: 'Menu1-3' }
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       path: 'menu2',
-  //       component: () => import('@/views/nested/menu2/index'),
-  //       meta: { title: 'menu2' }
-  //     }
-  //   ]
-  // },
-
   {
-    path: 'external-link',
+    path: '/activity',
     component: Layout,
+    redirect: '/activity/courselist',
+    name: '任课',
+    meta: { title: '任课', icon: 'nested' },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
+        path: '/activity/courselist',
+        name: '任课列表',
+        component: () => import('@/views/activitylist/courselist'),
+        meta: { title: '任课列表', icon: 'table' }
+      },
+      {
+        path: '/activity/coursedispatch',
+        name: '任课安排',
+        component: () => import('@/views/activity/coursedispatch'),
+        meta: { title: '任课安排', icon: 'form' }
+      },
     ]
   },
+
+  // {
+  //   path: 'external-link',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+  //       meta: { title: 'External Link', icon: 'link' }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

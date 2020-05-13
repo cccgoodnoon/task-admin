@@ -38,6 +38,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    // ws: false,
     // proxy: {
     //   '/': {
     //     target: 'http://47.111.234.116:8080',
