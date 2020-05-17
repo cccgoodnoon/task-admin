@@ -99,67 +99,78 @@ export default {
   //47.111.234.116:8080
   // 127.0.0.1:5000
   _get() {
-    return oGet('http://47.111.234.116:8080/api/admin/tasks')
+    return oGet('http://127.0.0.1:5000/api/admin/tasks')
   },
 
   _gets(params) {
-    return oGet('http://47.111.234.116:8080/api/admin/tasks/' + params)
+    return oGet('http://127.0.0.1:5000/api/admin/tasks/' + params)
   }, 
 
   _post(params) {
-    return oPost('http://47.111.234.116:8080/api/admin/tasks/new',params)
+    return oPost('http://127.0.0.1:5000/api/admin/tasks/new',params)
   }, 
 
   _update(id, param) {
-    return oUpdate('http://47.111.234.116:8080/api/admin/tasks/v/' + id, param)
+    return oUpdate('http://127.0.0.1:5000/api/admin/tasks/v/' + id, param)
   },
 
   _remove(user){
     var userid = user.id;
-    return oRemove('http://47.111.234.116:8080/api/admin/tasks/e/' + userid)     
+    return oRemove('http://127.0.0.1:5000/api/admin/tasks/e/' + userid)     
   },
 
 // ------------------------------------------
 
   _getM () {
-    return oGet('http://47.111.234.116:8080/api/u/member');
+    return oGet('http://127.0.0.1:5000/api/u/member');
   },
   _getOM (id) {
-    return oGet('http://47.111.234.116:8080/api/u/member/'+ id);
+    return oGet('http://127.0.0.1:5000/api/u/member/'+ id);
   },
   _getC () {
-    return oGet('http://47.111.234.116:8080/api/u/course');
+    return oGet('http://127.0.0.1:5000/api/u/course');
   },
 
   _getOC (id) {
-    return oGet('http://47.111.234.116:8080/api/u/course/'+ id);
+    return oGet('http://127.0.0.1:5000/api/u/course/'+ id);
   },
   _getA (id) {
-    return oGet('http://47.111.234.116:8080/api/u/activity/'+ id);
+    return oGet('http://127.0.0.1:5000/api/u/activity/'+ id);
   },
 
   _posta(params) {
-    return oPost('http://47.111.234.116:8080/api/u/activity',params);
+    return oPost('http://127.0.0.1:5000/api/u/activity',params);
   },
 
   _updatea (id, param) {
-    return oUpdate('http://47.111.234.116:8080/api/u/activity/state/'+ id, param);
+    return oUpdate('http://127.0.0.1:5000/api/u/activity/state/'+ id, param);
     
   },
 
   _removea(uuid){      
-    return oRemove('http://47.111.234.116:8080/api/u/activity/'+ uuid);    
+    return oRemove('http://127.0.0.1:5000/api/u/activity/'+ uuid);    
   },
 
 
   // -----------------------------------------------------------
   _geta () {
-    return oGet('http://47.111.234.116:8080/api/u/activity');
+    return oGet('http://127.0.0.1:5000/api/u/activity');
   },
   _getReport2 () {
-      return 'http://47.111.234.116:8080/api/u/export/report2';
+      return 'http://127.0.0.1:5000/api/u/export/report2';
   },
   _getReport3 () {
-      return 'http://47.111.234.116:8080//api/u/export/report3';
+      return 'http://127.0.0.1:5000//api/u/export/report3';
   }, 
+  // -----------------------------------------------------------
+  _removeNode(id){      
+    return oRemove('http://47.114.154.188:8080/ndb/file/'+id);  
+  },
+  _getNode () {
+    return oGet('http://127.0.0.1:5000/api/u/node');
+  },
+  _downloadNode (id) {
+    return oGet('http://47.114.154.188:8080/api/u/node'+id);
+  },
+
 }

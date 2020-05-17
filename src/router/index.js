@@ -97,6 +97,12 @@ export const constantRoutes = [
 				meta: { title: "任务详情", icon: "fa fa-list-alt" },
 				component: () => import("@/views/task/view"),
 				hidden:true
+      },
+      {
+				path: "task/upload", 
+				name: "文件上传",
+				meta: { title: "文件上传", icon: "link" },
+				component: () => import("@/views/upload/uploadfile.vue"),
 			}
     ]
   },
