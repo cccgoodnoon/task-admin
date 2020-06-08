@@ -13,7 +13,8 @@
                                     <el-upload
                                         class="upload-demo"
                                         ref="upload"
-                                        action="http://47.114.154.188:8080/ndb/file"
+                                        action="#"
+                                        :http-request="handleFileUpload"
                                         :on-preview="handlePreview"
                                         :on-remove="handleRemove"
                                         :before-remove="beforeRemove"
@@ -182,6 +183,26 @@
                         this.getActivities();
                     });
                 })
+            },
+			handleFileUpload(upload) {
+                let formData = new FormData();
+                formData.append("file", upload.file);
+                formData.append('group', 'system');
+        
+                // let config = {
+                //     headers: {
+                //         "Content-Type": "multipart/form-data"
+                //     }
+                // };
+                console.log(formData);
+                
+                api._postFile({data:formData}).then((data) => {
+                    // var src = URL.createObjectURL(upload.file);
+                    console.log(data);
+                }).catch((err)=> {
+                    console.log(err,'error');
+                })
+                // return "http://47.114.154.188:8080/ndb/file"
             },
             submitUpload() {
                 this.$refs.upload.submit();

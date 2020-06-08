@@ -75,7 +75,7 @@ export const constantRoutes = [
       {
         path: 'task/list',
         name: '任务列表',
-        component: () => import('@/views/task/list'),
+        component: () => import('@/views/task/tasklist'),
         meta: { title: '任务列表', icon: 'table' }
       },
       {
@@ -87,7 +87,7 @@ export const constantRoutes = [
       {
         path: 'task/edit/:id',
         name: '修改任务',
-        component: () => import('@/views/task/edit'),
+        component: () => import('@/views/task/taskeditor'),
         meta: { title: '修改任务', icon: 'el-icon-s-order' },
         hidden:true
       },
@@ -95,13 +95,13 @@ export const constantRoutes = [
 				path: "task/view/:id", 
 				name: "任务详情",
 				meta: { title: "任务详情", icon: "fa fa-list-alt" },
-				component: () => import("@/views/task/view"),
+				component: () => import("@/views/task/taskviewer"),
 				hidden:true
       },
       {
 				path: "task/upload", 
-				name: "文件上传",
-				meta: { title: "文件上传", icon: "link" },
+				name: "附件列表",
+				meta: { title: "附件列表", icon: "link" },
 				component: () => import("@/views/upload/uploadfile.vue"),
 			}
     ]
@@ -116,7 +116,7 @@ export const constantRoutes = [
       {
         path: '/activity/courselist',
         name: '任课列表',
-        component: () => import('@/views/activitylist/courselist'),
+        component: () => import('@/views/activity/teach-activitylist'),
         meta: { title: '任课列表', icon: 'table' }
       },
       {

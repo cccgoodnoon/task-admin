@@ -11,6 +11,6 @@
 
 
 // To configure the remote server.
-var CONFIG_API_BASE_URL = "http://127.0.0.1/openedu/rest/"
+var CONFIG_API_BASE_URL = "http://127.0.0.1:5000/api/"
 
 export default {CONFIG_API_BASE_URL}

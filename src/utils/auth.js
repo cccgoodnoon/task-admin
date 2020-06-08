@@ -98,6 +98,7 @@ export const oRemove = (url, params) => {
 export default {
   //47.111.234.116:8080
   // 127.0.0.1:5000
+  //http://47.114.154.188:8080
   _get() {
     return oGet('http://127.0.0.1:5000/api/admin/tasks')
   },
@@ -157,20 +158,22 @@ export default {
     return oGet('http://127.0.0.1:5000/api/u/activity');
   },
   _getReport2 () {
-      return 'http://127.0.0.1:5000/api/u/export/report2';
+      return oGet('http://127.0.0.1:5000/api/u/export/report2');
   },
   _getReport3 () {
-      return 'http://127.0.0.1:5000//api/u/export/report3';
+      return oGet('http://127.0.0.1:5000//api/u/export/report3');
   }, 
   // -----------------------------------------------------------
   _removeNode(id){      
     return oRemove('http://47.114.154.188:8080/ndb/file/'+id);  
   },
   _getNode () {
-    return oGet('http://127.0.0.1:5000/api/u/node');
+    return oGet('http://127.0.0.1:5000/api/u/fdb/task');
   },
   _downloadNode (id) {
-    return oGet('http://47.114.154.188:8080/api/u/node'+id);
+    return oGet('http://127.0.0.1:5000/api/u/node'+id);
   },
-
+  _postFile (params) {
+    return oPost('http://127.0.0.1:5000/api/u/fdb/task',params);
+  }
 }

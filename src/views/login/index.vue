@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">登录</h3>
       </div>
 
       <el-form-item prop="username">
@@ -139,8 +139,10 @@ export default {
             console.log('登录成功')
             this.$router.push({ path: this.redirect || '/' })   // 登录成功之后重定向到首页
             this.loading = false
-          }).catch(() => {
+          }).catch((err) => {
             this.$message.error('用户名或密码错误');
+            console.log(err.msg);
+            
             this.loading = false
           })
         } else {
@@ -272,6 +274,7 @@ $light_gray:#eee;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
+      letter-spacing:40px;
     }
   }
 
