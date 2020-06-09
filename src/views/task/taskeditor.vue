@@ -27,7 +27,7 @@
         <el-form-item label="上传文件">
             <el-upload
             ref="upload"
-            :action="url" 
+            action="/api/u/fdb/task" 
             :limit="2"
             multiple
             :with-credentials="true"
@@ -130,9 +130,9 @@ export default {
         add(form) {
             this.$refs['update'].validate((valid) => {
                 if (valid) {
-                this.$refs.upload.submit()
+                    this.$refs.upload.submit()
             } else {
-            return false;
+                return false;
             }
             });
         },
@@ -146,18 +146,16 @@ export default {
         },
         uploadFalse(response, file, fileList){
             console.log(response);
-            
-            this.$message.error("上传失败,请选择合适的文件格式");
-
+            this.$message.error(response.message);
         },
         // 上传文件超出个数
         handleExceed(files, fileList) {
             this.$message.warning(`当前只能选择上传2 个文件`);
-            },
-        //  移除文件
+        },
+        // 移除文件
         handleRemove(res, file, fileList) {
             this.$message.warning(`移除当前${res.name}文件，请重新选择文件上传！`);
-            }
+        },
     }
   }
 </script>

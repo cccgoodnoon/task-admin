@@ -13,11 +13,12 @@
                                     <el-upload
                                         class="upload-demo"
                                         ref="upload"
-                                        action="#"
-                                        :http-request="handleFileUpload"
+                                        action="/api/u/fdb/task"
                                         :on-preview="handlePreview"
                                         :on-remove="handleRemove"
                                         :before-remove="beforeRemove"
+                                        :on-success="upFile"
+                                        :on-error="uploadFalse"
                                         multiple
                                         :limit="3"
                                         :auto-upload="false"
@@ -184,33 +185,58 @@
                     });
                 })
             },
-			handleFileUpload(upload) {
-                let formData = new FormData();
-                formData.append("file", upload.file);
-                formData.append('group', 'system');
+			// handleFileUpload(upload) {
+            //     let formData = new FormData();
+            //     formData.append("file", upload.file);
+            //     formData.append('group', 'system');
         
-                // let config = {
-                //     headers: {
-                //         "Content-Type": "multipart/form-data"
-                //     }
-                // };
-                console.log(formData);
+            //     // let config = {
+            //     //     headers: {
+            //     //         "Content-Type": "multipart/form-data"
+            //     //     }
+            //     // };
+            //     console.log(formData);
                 
-                api._postFile({data:formData}).then((data) => {
-                    // var src = URL.createObjectURL(upload.file);
-                    console.log(data);
-                }).catch((err)=> {
-                    console.log(err,'error');
-                })
-                // return "http://47.114.154.188:8080/ndb/file"
-            },
+            //     api._postFile({data:formData}).then((data) => {
+            //         // var src = URL.createObjectURL(upload.file);
+            //         console.log(data);
+            //     }).catch((err)=> {
+            //         console.log(err,'error');
+            //     })
+            //     // return "http://47.114.154.188:8080/ndb/file"
+            // },
             submitUpload() {
                 this.$refs.upload.submit();
                 this.getActivities();
             },
+            uploadFalse(response, file, fileList){
+                console.log(response);
+                this.$message.error(response.message);
+            },
             downloadNode(index,row){
-                var down='http://47.114.154.188:8080/ndb/file/'+row.uuid
+                var down='http://127.0.0.1:5000/api/anon/fdb/task/'+row.uuid
                 window.location.href = down
+                console.log(row,1111);
+
+                // api._downloadNode(row.uuid).then(res => {
+                //     this.$message.success('成功下载了该文件' + row.originname + ' !');
+                //     console.log(res);
+                //     // res = window.location.href
+                //     // this.getActivities();
+                //     // console.log(row.id);
+                // }).catch((res) => {
+                //     this.$message.error('下载!');
+                //     // this.getActivities();
+                // });
+                // window.location.href
+            },
+            upFile(response, file, fileList) {
+                console.log(response);
+                let self = this
+                if (response.status == 201) {
+                    self.$message.success("上传成功");
+                    self.getActivities();
+                }
             },
             handleCurrentChange(cpage) {
                 this.currpage = cpage;

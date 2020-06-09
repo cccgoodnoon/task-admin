@@ -127,7 +127,27 @@ export const constantRoutes = [
       },
     ]
   },
-
+  {
+    path: '/fdb',
+    component: Layout,
+    redirect: '/fdb/filelist',
+    name: '文件',
+    meta: { title: '文件', icon: 'link' },
+    children: [
+      {
+        path: '/fdb/filelist',
+        name: '文件列表',
+        component: () => import('@/views/fdb/fdb-file-list'),
+        meta: { title: '文件列表', icon: 'table' }
+      },
+      {
+        path: '/fdb/fileviewer',
+        name: '文件预览',
+        component: () => import('@/views/fdb/fdb-file-viewer'),
+        meta: { title: '文件预览', icon: 'form' }
+      },
+    ]
+  },
   // {
   //   path: 'external-link',
   //   component: Layout,

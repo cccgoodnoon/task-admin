@@ -170,8 +170,8 @@ export default {
   _getNode () {
     return oGet('http://127.0.0.1:5000/api/u/fdb/task');
   },
-  _downloadNode (id) {
-    return oGet('http://127.0.0.1:5000/api/u/node'+id);
+  _downloadNode (uuid) {
+    return oGet('http://127.0.0.1:5000/api/anon/fdb/task/'+uuid);
   },
   _postFile (params) {
     return oPost('http://127.0.0.1:5000/api/u/fdb/task',params);

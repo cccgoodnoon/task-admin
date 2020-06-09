@@ -39,24 +39,24 @@ module.exports = {
       errors: true
     },
     // ws: false,
-    // proxy: {
-    //   '/': {
-    //     target: 'http://47.111.234.116:8080',
-    //     ws: true,
-    //     changeOrigin: true,
-    //     pathRewrite:{
-    //       '^/':'/' 
-    //     }
-    //   },
-    //   '/api': {
-    //     target: 'http://47.111.234.116:8081',
-    //     ws: true,
-    //     changeOrigin: true,
-    //     pathRewrite:{
-    //       '^/api':'/api' 
-    //     }
-    //   },
-    // }
+    proxy: {
+      '/api/u/fdb/task': {
+        target: 'http://127.0.0.1:5000',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite:{
+          '^/':'/' 
+        }
+      }
+      // '/api': {
+      //   target: 'http://47.111.234.116:8081',
+      //   ws: true,
+      //   changeOrigin: true,
+      //   pathRewrite:{
+      //     '^/api':'/api' 
+      //   }
+      // }
+    }
     // before: require('./mock/mock-server.js')  //注释掉这句
   },
   configureWebpack: {
