@@ -99,7 +99,7 @@
     import api from "../../utils/auth"
     export default {
         name:'',
-        data : function () {
+        data () {
             return{
                 activities:[],
                 search:'',
@@ -118,7 +118,7 @@
                 selected: [], //已选择项
             }
         },
-        mounted:function(){
+        mounted (){
             this.getActivities();           
         },
         computed: {
