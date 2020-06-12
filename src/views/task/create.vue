@@ -61,27 +61,20 @@
 					<el-button size="small" type="success" plain @click="add()" >上传</el-button>
 					</el-upload>
 				</el-col>
-			</el-row>
-            
-			
+			</el-row>	
         </el-form-item>
 
-        <el-form-item label="上传附件2">
-			
-            
+        <!-- <el-form-item label="上传附件2">   
 			<el-row>
 				<el-col :span="8" v-if="isShowPdfTwo">
 					<div class="avatar-uploader">
 						<img width="40" height="40" :src="require('../../assets/file/'+matchType(this.filenameTwo)+'.png')"> 
 						<p>{{this.filenameTwo}}</p>
 					</div>
-					<!-- 预览/删除遮罩 -->
 					<div class="mask">
-						<!--预览 -->
 						<a :href="PdfViewerTwo" target="_blank" title="点击预览">
 							<i class="el-icon-zoom-in"></i>
 						</a>
-						<!-- 删除重新上传 -->
 						<a href='javascript:;' @click="removeFile('filetwo')"  title="删除预览">
 							<i class="el-icon-delete" ></i>
 						</a>
@@ -106,7 +99,7 @@
 					</el-upload>
 				</el-col>
 			</el-row>
-        </el-form-item>
+        </el-form-item> -->
 
 		<el-form-item>
 			<el-button @click="handleCancel">取 消</el-button>
@@ -218,22 +211,10 @@ export default {
 			this.$router.replace('/task/list');
 		},
         add() {
-            // this.$refs['create'].validate((valid) => {
-            //     if (valid) {
-                this.$refs.upload.submit()
-            // } else {
-            //     return false;
-            // }
-            // });
+            this.$refs.upload.submit()
 		},
         addt() {
-            // this.$refs['create'].validate((valid) => {
-            //     if (valid) {
             this.$refs.uploadTwo.submit()
-            // } else {
-            //     return false;
-            // }
-            // });
         },
         // 成功上传文件
         upFile(response, file, fileList) {
@@ -241,11 +222,11 @@ export default {
 			console.log(file);
 			console.log(fileList);
 			console.log(fileList[0].name);
+			// console.log(fileList[1].name);
 			this.filename = fileList[0].name
             let self = this
             if (response.status == 201) {
 				this.$message.success("上传成功");
-				console.log(response.nodeid,111111);
 				self.nodeid = response.nodeid;
 				this.getFileLink("fileone");
 				this.isShowPdf = true
@@ -275,7 +256,6 @@ export default {
 					this.PdfViewerTwo = this.filePath;
 				break;
 			}
-			// }
 		},
 		removeFile(e) {
 			switch (e) {

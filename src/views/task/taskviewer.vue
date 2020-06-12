@@ -27,6 +27,25 @@
                 <el-option label="未完成" value="0"></el-option>
             </el-select>
         </el-form-item> 
+
+        <el-form-item label="附件" v-if="isShowPdf">
+            <el-row>
+				<el-col :span="8">
+					<div class="avatar-uploader">
+						<img width="40" height="40" :src="require('../../assets/file/'+matchType(this.filename)+'.png')"> 
+						<p>{{this.filename}}</p>
+					</div>
+					<!-- 预览/删除遮罩 -->
+					<div class="mask">
+						<!--预览 -->
+						<a :href="PdfViewer" target="_blank" title="点击预览">
+							<i class="el-icon-zoom-in"></i>
+						</a>
+					</div>
+				</el-col>
+			</el-row>
+        </el-form-item> 
+
         <el-form-item>
             <el-button type="primary" native-type="submit">返回列表</el-button>
 		</el-form-item>
@@ -39,6 +58,8 @@ export default {
     data() {
         return {
             user:{},
+			isShowPdf:false,
+			PdfViewer: "javascript:;",
         }
     },
     mounted(){
@@ -52,20 +73,140 @@ export default {
 			let self = this
 			api._gets(self.$route.params.id).then(res => {
                 self.user = res;
+                // console.log(res);
                 self.user.state = String(res['state'])
-                console.log(res);
+                self.user.nodeid = res['nodeid']
+                if (self.user.nodeid != null) {
+					this.getFileName();
+					this.getFileLink("fileone");
+                }
 			},err => {
 				console.log(err);
             })
         },
+		getFileLink(p) {
+			this.filePath = 
+				"/api/u/fdb/task/"+this.user.nodeid+"/content";
+			console.log(this.filePath,"url");
+			switch (p) {
+				case "fileone":
+					this.PdfViewer = this.filePath;
+				break;
+				case "filetwo":
+					this.PdfViewerTwo = this.filePath;
+				break;
+			}
+        },
+        getFileName(){
+			// console.log(this.user.nodeid,11111111);
+			let self = this
+            api._getOneNode(this.user.nodeid).then(res => {
+                self.filename = res
+				console.log(this.filename);
+				this.isShowPdf = true
+            })
+        },
 		back() {
 			this.$router.replace('/task/list');
-		},
+        },
+		matchType(filename){
+			console.log(this.filename);
+			var suffix = ''
+			var result = ''
+			try {
+				var fileArr = filename.split('.')
+				suffix = fileArr[fileArr.length -1]
+			}catch(err){
+				suffix = ''
+			}
+			if (!suffix){
+				result =false
+				return result
+			}
+			var imglist = ['png','jpg','jpeg', 'gif']
+			result =imglist.some(function(item){
+				return item === suffix
+			})
+			if (result){
+				result = 'image'
+				return result
+			}
+			var txtlist = ['txt']
+			result =txtlist.some(function(item){
+				return item === suffix
+			})
+			if (result){
+				result = 'txt'
+				return result
+			}
+			var pdflist = ['pdf']
+			result =pdflist.some(function(item){
+				return item === suffix
+			})
+			if (result){
+				result = 'pdf'
+				return result
+			}
+			var doclist = ['doc']
+			result =doclist.some(function(item){
+				return item === suffix
+			})
+			if (result){
+				result = 'doc'
+				return result
+			}
+			var pptlist = ['ppt']
+			result =pptlist.some(function(item){
+				return item === suffix
+			})
+			if (result){
+				result = 'ppt'
+				return result
+			}
+			var ziplist = ['zip','rar']
+			result =ziplist.some(function(item){
+				return item === suffix
+			})
+			if (result){
+				result = 'zip'
+				return result
+			}
+			var mp4list = ['mp4']
+			result =mp4list.some(function(item){
+				return item === suffix
+			})
+			if (result){
+				result = 'mp4'
+				return result
+			}
+			var xlslist = ['xls','xlsx']
+			result =xlslist.some(function(item){
+				return item === suffix
+			})
+			if (result){
+				result = 'xls'
+				return result
+			}
+		}
     }
   }
 </script>
 <style>
 .el-form{
 	margin: 50px 600px 0px 20px;
+}
+img{
+	float: left;
+	padding: 0 ;
+	margin:  0px 0px 0px 8px;
+}
+p{
+	padding:5px 0px 0px 60px;
+	font-family:sans-serif;
+	margin: 2px 0px 0px 10px;
+}
+.mask{
+	padding-left:12px;
+	float: left;
 }
 </style>

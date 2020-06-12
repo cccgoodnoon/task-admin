@@ -47,7 +47,15 @@ module.exports = {
         pathRewrite:{
           '^/':'/' 
         }
-      }
+      },
+      '/api/u/fdb/m/task': {
+        target: 'http://127.0.0.1:5000',
+        ws: true,
+        changeOrigin: true,
+        pathRewrite:{
+          '^/':'/' 
+        }
+      },
       // '/api': {
       //   target: 'http://47.111.234.116:8081',
       //   ws: true,

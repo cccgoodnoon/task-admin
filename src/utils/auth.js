@@ -164,11 +164,14 @@ export default {
       return oGet('http://127.0.0.1:5000//api/u/export/report3');
   }, 
   // -----------------------------------------------------------
-  _removeNode(id){      
-    return oRemove('http://47.114.154.188:8080/ndb/file/'+id);  
+  _removeNode(uuid){      
+    return oRemove('http://127.0.0.1:5000/api/u/fdb/task/'+uuid);  
   },
   _getNode () {
     return oGet('http://127.0.0.1:5000/api/u/fdb/task');
+  },
+  _getOneNode (uuid) { 
+    return oGet('http://127.0.0.1:5000/api/u/fdb/task/1/'+uuid);
   },
   _downloadNode (uuid) {
     return oGet('http://127.0.0.1:5000/api/anon/fdb/task/'+uuid);
