@@ -225,18 +225,18 @@
                     let array=val.pop();
                     this.$refs.activityTable.toggleRowSelection(array,true);
                     this.actiSelected=array;
-                    console.log(array);
+                    // console.log(array);
                     // document.getElementById("teacher").innerHTML=array.firstname; 
                 } 
                 if (val.length == 1) {
                     this.$refs.activityTable.toggleRowSelection(val,false);
                     this.actiSelected=val;
                     this.course_name = val[0].name;
-                    console.log(val);
+                    // console.log(val);
                     // this.state = val[0].objectstate;
                     this.uuid = val[0].uuid;
                     // console.log(this.uuid);
-                    console.log("复选框状态",this.state);
+                    // console.log("复选框状态",this.state);
                 }
  
             },
@@ -302,7 +302,7 @@
                 // console.log("该行id",row.id);
                 // console.log("该行点击时状态",row.objectstate);
                 this.state = row.objectstate
-                console.log(this.state);
+                // console.log(this.state);
                 this.update = {'state':row.objectstate}              
                 this.$refs.activityTable.toggleRowSelection(row)
                 this.currentId = row.id;
@@ -364,7 +364,7 @@
             removeActivity(){
                 // console.log(this.course_name);
                 // console.log(this.member_uuid);
-                console.log(this.uuid);
+                // console.log(this.uuid);
                 this.$confirm('此操作将删除该老师的 ' + this.actiSelected.length + ' 门课程, 是否继续?','提示', {
                   type: 'warning'
                 }).then(() => {

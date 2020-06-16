@@ -59,6 +59,9 @@
 					<!-- <div slot="tip" class="el-upload__tip">请选择一个英文名称文件</div> -->
 					<el-button slot="trigger" size="small" plain type="primary">选取文件</el-button>
 					<el-button size="small" type="success" plain @click="add()" >上传</el-button>
+					<router-link :to="`/task/attachments/new`">
+						<el-button type="success" size="small">上传附件</el-button>
+					</router-link>
 					</el-upload>
 				</el-col>
 			</el-row>	
@@ -145,6 +148,10 @@ export default {
 			}, {
 				min: 1,
 				max: 25,
+			}],
+			state: [{
+				required: true,
+
 			}],
 		},
         currentPage: 0, // pdf文件页码

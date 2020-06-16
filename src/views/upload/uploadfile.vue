@@ -165,7 +165,7 @@
                 let self = this
                 api._getNode().then(res => {
                     self.activities  = res;
-                    console.log(res,8888);
+                    // console.log(res,8888);
                 },err => {
                     console.log(err);
                 })
@@ -178,7 +178,7 @@
                     api._removeNode(row.uuid).then(res => {
                         this.$message.success('成功删除了该文件' + row.curname + ' !');
                         this.getActivities();
-                        console.log(row.id);
+                        // console.log(row.id);
                     }).catch((res) => {
                         // this.$message.error('删除失败!');
                         this.getActivities();

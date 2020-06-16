@@ -44,7 +44,7 @@
 						</a>
 					</div>
 				</el-col>
-				<el-col :span="8">
+				<el-col :span="8" v-if="!isShowPdf">
 					<el-upload
 					ref="upload"
 					action="/api/u/fdb/task" 
@@ -66,6 +66,12 @@
 			</el-row>
         </el-form-item> 
 
+		<el-form-item>
+			<router-link :to="`/task/${this.$route.params.id}/attachments/update`">
+				<el-button type="success" size="small">上传附件</el-button>
+			</router-link>
+		</el-form-item>
+
         <el-form-item>
 			<el-button @click="handleCancel">取 消</el-button>
             <el-button type="primary" @click="updateUser()">确 定</el-button>
@@ -82,10 +88,10 @@ export default {
         return {
             update:{},
             // url:"http://127.0.0.1:5000/api/u/fdb/task",
-            form: {
-                ipArea: "",
-                sourceMachineIp: ""
-            },
+            // form: {
+            //     ipArea: "",
+            //     sourceMachineIp: ""
+            // },
             updateRules: {
                 performer: [{
                     required: true,
@@ -127,7 +133,7 @@ export default {
 			let self = this
 			api._gets(self.$route.params.id).then(res => {
                 self.update = res;
-                console.log(res);
+                // console.log(res);
                 self.update.state = String(res['state'])
                 self.update.nodeid = res['nodeid']
                 // console.log(res['nodeid'],133);
@@ -147,7 +153,7 @@ export default {
                 });
                 // this.$refs.upload.submit()
                 this.$router.push('/task/list');
-                console.log(res);
+                // console.log(res);
             });
         },
 		handleCancel() {
@@ -162,7 +168,7 @@ export default {
         },
         // 成功上传文件
         upFile(response, file, fileList) {
-            console.log(response);
+            // console.log(response);
             let self = this
             if (response.status == 201) {
                 this.$message.success("上传成功");
@@ -174,7 +180,7 @@ export default {
             }
         },
         uploadFalse(response, file, fileList){
-            console.log(response);
+            // console.log(response);
             this.$message.error(response.message);
         },
         // 上传文件超出个数
@@ -188,7 +194,7 @@ export default {
 		getFileLink(p) {
 			this.filePath = 
 				"/api/u/fdb/task/"+this.update.nodeid+"/content";
-			console.log(this.filePath,"url");
+			// console.log(this.filePath,"url");
 			switch (p) {
 				case "fileone":
 					this.PdfViewer = this.filePath;
@@ -209,7 +215,7 @@ export default {
                 }else{
                     this.isShowPdf = true;
                 }
-				console.log(this.filename);
+				// console.log(this.filename);
 				// this.isShowPdf = true
             })
         },

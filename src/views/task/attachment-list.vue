@@ -1,35 +1,9 @@
 <template>
-    <el-form @submit.native.prevent="back" :model="user" label-width="100px" readonly: true>
-        <el-form-item label="ID">
-            <el-input v-model="user.id" readonly></el-input>
-        </el-form-item>
-		<el-form-item label="负责人">
-            <el-input v-model="user.performer" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="任务说明">
-            <el-input v-model="user.title" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="任务详情">
-            <el-input v-model="user.description" readonly></el-input>
-        </el-form-item>
-        <el-form-item label="开始日期">
-            <el-date-picker  v-model="user.begintime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期" style="width: 100%;" readonly>
-            </el-date-picker>
-        </el-form-item>
-        <el-form-item label="截止日期">
-            <el-date-picker v-model="user.endtime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期" style="width: 100%;" readonly>
-            </el-date-picker>
-        </el-form-item>
-
-        <el-form-item label="是否完成">
-            <el-select v-model="user.state" prop="state" :disabled=true>
-                <el-option label="已完成" value="1"></el-option>
-                <el-option label="未完成" value="0"></el-option>
-            </el-select>
-        </el-form-item> 
-
-        <el-form-item label="附件" v-if="isShowPdf">
-            <el-row>
+  <!-- <div class="app-container">
+  </div> -->
+  <el-form>
+    <el-form-item label="附件" v-if="isShowPdf">
+      <el-row>
 				<el-col :span="8">
 					<div class="avatar-uploader">
 						<img width="40" height="40" :src="require('../../assets/file/'+matchType(this.filename)+'.png')"> 
@@ -44,52 +18,53 @@
 					</div>
 				</el-col>
 			</el-row>
-        </el-form-item> 
-
-        <el-form-item>
-            <el-button type="primary" native-type="submit">返回列表</el-button>
-            <router-link :to="`/task/${this.$route.params.id}/attachments`">
-              <el-button type="success">查看所有附件</el-button>
-            </router-link>
-		</el-form-item>
-    </el-form>
-    
+    </el-form-item> 
+  </el-form>
 </template>
+
 <script>
+// Requirement
+// 支持参数：
+// - url: 服务端获取附件list的url，例如/task/{id}/attachments，
+// - taskid: 任务标识
+// - readonly: true or false
+// 功能要求
+// - 调用服务端restful接口并从服务端取得attachments数据，以list风格显示。包括文件名、大小、上传日期
+// - 支持如下操作：download、open和删除。如果readonly为true，则隐掉删除按钮。
+//
+import "../../service/foundation"
 import api from "../../utils/auth"
+
 export default {
-    data() {
-        return {
-            user:{},
-			isShowPdf:false,
-			PdfViewer: "javascript:;",
-        }
-    },
-    mounted(){
-        this.getUser();
-    },
-    methods: {
-		reset() {
-			this.$refs.create.resetFields();
-		},
+  data() {
+    return {
+      user:{},
+      isShowPdf:false,
+      PdfViewer: "javascript:;",
+    }
+  },
+  mounted(){
+      this.getUser();
+  },
+  methods:{
 		getUser(){
 			let self = this
 			api._gets(self.$route.params.id).then(res => {
-                self.user = res;
-                // console.log(res);
-                self.user.state = String(res['state'])
-                self.user.nodeid = res['nodeid']
-                if (self.user.nodeid != null) {
+          // self.user = res;
+          // console.log(res);
+          // self.user.state = String(res['state'])
+          self.nodeid = res['nodeid']
+          if (self.nodeid != null) {
 					this.getFileName();
 					this.getFileLink("fileone");
-                }
+          }
 			},err => {
 				console.log(err);
-            })
-        },
+        })
+    },
 		getFileLink(p) {
 			this.filePath = 
-				"/api/u/fdb/task/"+this.user.nodeid+"/content";
+				"/api/u/fdb/task/"+this.nodeid+"/content";
 			// console.log(this.filePath,"url");
 			switch (p) {
 				case "fileone":
@@ -99,19 +74,17 @@ export default {
 					this.PdfViewerTwo = this.filePath;
 				break;
 			}
-        },
-        getFileName(){
+    },
+    getFileName(){
 			// console.log(this.user.nodeid,11111111);
 			let self = this
-            api._getOneNode(this.user.nodeid).then(res => {
-                self.filename = res
+      api._getOneNode(this.nodeid).then(res => {
+        self.filename = res
 				// console.log(this.filename);
 				this.isShowPdf = true
-            })
-        },
-		back() {
-			this.$router.replace('/task/list');
-        },
+      })
+    },
+
 		matchType(filename){
 			// console.log(this.filename);
 			var suffix = ''
@@ -191,12 +164,21 @@ export default {
 				return result
 			}
 		}
-    }
   }
+}
 </script>
+
 <style>
+.actions{
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
 .el-form{
 	margin: 50px 600px 0px 20px;
+  padding-left: 30px;
+  padding-top: 50px;
+
 }
 img{
 	float: left;

@@ -346,7 +346,7 @@
                 api._geta().then(res => {
                     self.activities  = res;
                     // console.log(res.data);
-                    console.log(res,8888);
+                    // console.log(res,8888);
                 },err => {
                     console.log(err);
                 })
@@ -420,7 +420,7 @@
                     api._remove(activity).then(res => {
                         this.$message.success('成功删除了该课程分配' + activity.title + ' !');
                         this.getActivities();
-                        console.log(activity.id);
+                        // console.log(activity.id);
                     }).catch((res) => {
                         this.$message.error('删除失败!');
                     });

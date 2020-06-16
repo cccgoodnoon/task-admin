@@ -164,7 +164,7 @@
                 let self = this
                 api._getNode().then(res => {
                     self.activities  = res;
-                    console.log(res,8888);
+                    // console.log(res,8888);
                 },err => {
                     console.log(err);
                 })
@@ -177,7 +177,7 @@
                     api._removeNode(row.uuid).then(res => {
                         this.$message.success('成功删除了该文件' + row.curname + ' !');
                         this.getActivities();
-                        console.log(row.id);
+                        // console.log(row.id);
                     }).catch((res) => {
                         // this.$message.error('删除失败!');
                         this.getActivities();
@@ -194,11 +194,11 @@
                 //         "Content-Type": "multipart/form-data"
                 //     }
                 // };
-                console.log(formData);
+                // console.log(formData);
                 
                 api._postFile({data:formData}).then((data) => {
                     // var src = URL.createObjectURL(upload.file);
-                    console.log(data);
+                    // console.log(data);
                 }).catch((err)=> {
                     console.log(err,'error');
                 })

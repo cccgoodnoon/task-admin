@@ -35,13 +35,13 @@ const actions = {
       login({ username: username.trim(), password: password }).then(response => {
         const data = response    // 返回字典{users：{},token: }
         // const { data } = response
-        console.log("拿到token")
-        console.log(data['token'])
+        // console.log("拿到token")
+        // console.log(data['token'])
         // commit('SET_TOKEN', data.token)
         commit('SET_TOKEN', data['token'])      
         // setToken(data.token)    // 在auth.js封装了setToken，登录成功后将token存储在cookie之中
         setToken(data['token'])
-        console.log("成功把token放到cookie中")
+        // console.log("成功把token放到cookie中")
         resolve()     // token有效期是Session，就是当浏览器关闭了就丢失了
       }).catch(error => {
         console.log("登录失败");        

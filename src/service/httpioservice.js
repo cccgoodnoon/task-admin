@@ -13,6 +13,9 @@ import axios from 'axios'
 
 
 // -----------------------------------------------------------------------------
+// 本模块封装了调用服务端restful api所需的http客户端，大致对应于axios的简单封装，包括
+// 对于cookie、登录信息、token、跨域、错误的公共处理，以简化更上层代码的开发。
+//
 // modified by zhangwei on 2020.04.21
 // - Add some empty methods to reflect the architecture requirement and the interface 
 // design. Also add a default callback method.

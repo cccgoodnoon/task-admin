@@ -100,24 +100,24 @@ export default {
   // 127.0.0.1:5000
   //http://47.114.154.188:8080
   _get() {
-    return oGet('http://127.0.0.1:5000/api/admin/tasks')
+    return oGet('http://127.0.0.1:5000/api/admin/task/tasks')
   },
 
   _gets(params) {
-    return oGet('http://127.0.0.1:5000/api/admin/tasks/' + params)
+    return oGet('http://127.0.0.1:5000/api/admin/task/tasks/' + params)
   }, 
 
   _post(params) {
-    return oPost('http://127.0.0.1:5000/api/admin/tasks/new',params)
+    return oPost('http://127.0.0.1:5000/api/admin/task/tasks/new',params)
   }, 
 
   _update(id, param) {
-    return oUpdate('http://127.0.0.1:5000/api/admin/tasks/v/' + id, param)
+    return oUpdate('http://127.0.0.1:5000/api/admin/task/tasks/v/' + id, param)
   },
 
   _remove(user){
     var userid = user.id;
-    return oRemove('http://127.0.0.1:5000/api/admin/tasks/e/' + userid)     
+    return oRemove('http://127.0.0.1:5000/api/admin/task/tasks/e/' + userid)     
   },
 
 // ------------------------------------------

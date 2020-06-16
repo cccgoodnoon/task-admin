@@ -103,7 +103,28 @@ export const constantRoutes = [
 				name: "附件列表",
 				meta: { title: "附件列表", icon: "link" },
 				component: () => import("@/views/upload/uploadfile.vue"),
-			}
+      },
+      {
+				path: "task/:id/attachments", 
+				name: "所有附件",
+				meta: { title: "任务附件", icon: "fa fa-list-alt" },
+				component: () => import("@/views/task/attachment-list"),
+				hidden:true
+      },
+      {
+				path: "task/attachments/new", 
+				name: "附件上传",
+				meta: { title: "附件上传", icon: "fa fa-list-alt" },
+				component: () => import("@/views/task/attachment-uploader"),
+				hidden:true
+      },
+      {
+				path: "task/:id/attachments/update", 
+				name: "附件更新",
+				meta: { title: "附件更新", icon: "fa fa-list-alt" },
+				component: () => import("@/views/task/attachment-uploader"),
+				hidden:true
+      },
     ]
   },
   {

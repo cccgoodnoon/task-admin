@@ -346,7 +346,7 @@
                 api._geta().then(res => {
                     self.activities  = res;
                     // console.log(res.data);
-                    console.log(res,8888);
+                    // console.log(res,8888);
                 },err => {
                     console.log(err);
                 })

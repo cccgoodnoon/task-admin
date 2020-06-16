@@ -134,7 +134,7 @@ export default {
         let self = this
         api._get().then(res => {
             self.users = res;
-            console.log(res,8888);
+            // console.log(res,8888);
             this.listLoading = false
         },err => {
             console.log(err);

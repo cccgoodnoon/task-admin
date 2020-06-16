@@ -17,7 +17,7 @@ service.interceptors.request.use(
     // do something before request is sent
     
     if (store.getters.token) {
-    console.log(111)
+    // console.log(111)
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
@@ -48,7 +48,7 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     // console.log(response['token'], 888)
-    console.log(res['token'], 777)
+    // console.log(res['token'], 777)
     // if the custom code is not 20000, it is judged as an error.
     if (response.status !== 200) {
       Message({
