@@ -9,12 +9,14 @@
       :on-remove="handleRemove"
       :on-exceed="handleExceed"
       :data="upData"
+      :limit="1"
       multiple>
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
     </el-upload>
-    <el-button type="primary" @click="back">上传完毕</el-button>
+		<!-- <el-button type="success" plain @click="add()">上传</el-button> -->
+    <el-button type="primary" @click="back" class="down">上传完毕</el-button>
   </div>
 </template>
 
@@ -37,6 +39,7 @@
 // 路由组件传参, https://router.vuejs.org/zh/guide/essentials/passing-props.html#%E5%B8%83%E5%B0%94%E6%A8%A1%E5%BC%8F
 //
 import "../../service/foundation"
+import api from "../../utils/auth"
 
 export default {
   computed:{
@@ -57,11 +60,20 @@ export default {
       let self = this
       if (response.status == 201) {
 				this.$message.success("上传成功");
-				// self.nodeid = response.nodeid;
+        self.nodeid = response.nodeid;
+        // sessionStorage.nodeid = response.nodeid;
+				// console.log(sessionStorage.nodeid);
+
+        if(self.nodeid != null){
+
+        }
 				// this.getFileLink("fileone");
 				// this.isShowPdf = true
       }
     },
+    add() {
+      this.$refs.upload.submit()
+		},
 		// removeFile(e) {
 		// 	switch (e) {
 		// 		case "fileone":
@@ -71,10 +83,10 @@ export default {
 		// 			this.isShowPdfTwo = false
 		// 		break;
 		// 	}
-		// },
+    // },
     uploadFalse(response, file, fileList){
         console.log(response);
-        this.$message.error(response.message);
+        this.$message.error(response.message.slice(1,-2));
     },
     // 上传文件超出个数
     handleExceed(files, fileList) {
@@ -87,10 +99,10 @@ export default {
 		},
 		back() {
 			this.$message({
-				message: '取消创建',
-				type: 'warning'
+				message: '返回编辑',
+				type: 'success'
 			});
-			this.$router.replace('/task/list');
+			this.$router.replace(`/task/edit/${this.$route.params.id}`);
 		},
   }
 }
@@ -116,5 +128,8 @@ export default {
   position: relative;
   overflow: hidden;
   width:95%;
+}
+.down{
+  margin-top: 50px;
 }
 </style>

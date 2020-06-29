@@ -9,7 +9,7 @@
 		<el-form-item label="任务详情" prop="description">
 			<el-input type="textarea" v-model="create.description" label-width="100px"></el-input>
 		</el-form-item>
-		<el-form-item label="开始日期">
+		<el-form-item label="开始日期" >
 			<el-date-picker v-model="create.begintime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期">
 			</el-date-picker>
 		</el-form-item>

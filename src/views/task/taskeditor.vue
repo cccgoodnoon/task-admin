@@ -42,6 +42,9 @@
 						<a href='javascript:;' @click="removeFile('fileone')"  title="删除预览">
 							<i class="el-icon-delete" ></i>
 						</a>
+						<a :href="PdfDownload" target="_blank" title="点击下载">
+							<i class="el-icon-download"></i>
+						</a>
 					</div>
 				</el-col>
 				<el-col :span="8" v-if="!isShowPdf">
@@ -112,7 +115,8 @@ export default {
                 }],
             },
             isShowPdf:false,
-            PdfViewer: "javascript:;",
+			PdfViewer: "javascript:;",
+			PdfDownload: "javascript:;",
         }
     },
     mounted(){
@@ -134,10 +138,13 @@ export default {
 			api._gets(self.$route.params.id).then(res => {
                 self.update = res;
                 // console.log(res);
-                self.update.state = String(res['state'])
-                self.update.nodeid = res['nodeid']
+				self.update.state = String(res['state'])
+				self.update.nodeid = sessionStorage.nodeid;
+				self.update.nodeid = res['nodeid']
+				// self.update.nodeid = localStorage.nodeid;
+				// console.log(localStorage.nodeid);
                 // console.log(res['nodeid'],133);
-                if (self.update.nodeid != null) {
+                if (self.update.nodeid != null && self.update.nodeid != 'None') {
 					this.getFileName();
 					this.getFileLink("fileone");
                 }
@@ -172,7 +179,10 @@ export default {
             let self = this
             if (response.status == 201) {
                 this.$message.success("上传成功");
-                self.update.nodeid = response.nodeid;
+				// self.update.nodeid = response.nodeid;
+				self.update.nodeid = localStorage.nodeid;
+				self.update.nodeid = response.nodeid;
+				// console.log(localStorage.nodeid);
                 // console.log(response.nodeid,170);
                 this.getFileLink("fileone");
                 this.getFileName()
@@ -192,12 +202,15 @@ export default {
             this.$message.warning(`移除当前${res.name}文件，请重新选择文件上传！`);
         },
 		getFileLink(p) {
-			this.filePath = 
+			this.fileDownloadPath=
+				"/api/u/fdb/task/"+this.update.nodeid;
+			this.fileViewPath = 
 				"/api/u/fdb/task/"+this.update.nodeid+"/content";
 			// console.log(this.filePath,"url");
 			switch (p) {
 				case "fileone":
-					this.PdfViewer = this.filePath;
+					this.PdfViewer = this.fileViewPath;
+					this.PdfDownload = this.fileDownloadPath;
 				break;
 				case "filetwo":
 					this.PdfViewerTwo = this.filePath;
@@ -210,7 +223,7 @@ export default {
             api._getOneNode(this.update.nodeid).then(res => {
                 // console.log(res,205);
                 self.filename = res
-                if(res == "无该文件"){
+                if(res == "没有附件"){
 				    this.isShowPdf = false;
                 }else{
                     this.isShowPdf = true;

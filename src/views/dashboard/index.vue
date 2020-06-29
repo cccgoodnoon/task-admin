@@ -1,7 +1,11 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">任务管理后台</div>
+    <!-- <div class="dashboard-text">任务管理后台</div> -->
+    <div class="text" style="text-align:center;">
+      <h1>任务管理后台</h1>
+    </div>
   </div>
+
 </template>
 
 <script>

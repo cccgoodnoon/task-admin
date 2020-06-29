@@ -129,6 +129,14 @@ export default {
     this.getUsers();
   },
   methods: {
+    // dateFormat: function(row, column){
+    //   var date = row[column.property];
+    //   console.log(date)
+    //   if (date === undefined) {
+    //     return "";
+    //   }
+    //   return util.formatDate.format(new Date(date), 'yyyy-MM-dd');
+    // },
     getUsers(){
         this.listLoading = true
         let self = this

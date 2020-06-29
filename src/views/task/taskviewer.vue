@@ -41,6 +41,9 @@
 						<a :href="PdfViewer" target="_blank" title="点击预览">
 							<i class="el-icon-zoom-in"></i>
 						</a>
+						<a :href="PdfDownload" target="_blank" title="点击下载">
+							<i class="el-icon-download"></i>
+						</a>
 					</div>
 				</el-col>
 			</el-row>
@@ -63,6 +66,7 @@ export default {
             user:{},
 			isShowPdf:false,
 			PdfViewer: "javascript:;",
+			PdfDownload: "javascript:;",
         }
     },
     mounted(){
@@ -79,7 +83,7 @@ export default {
                 // console.log(res);
                 self.user.state = String(res['state'])
                 self.user.nodeid = res['nodeid']
-                if (self.user.nodeid != null) {
+                if (self.user.nodeid != null && self.user.nodeid != 'None') {
 					this.getFileName();
 					this.getFileLink("fileone");
                 }
@@ -88,15 +92,18 @@ export default {
             })
         },
 		getFileLink(p) {
-			this.filePath = 
+			this.fileDownloadPath=
+				"/api/u/fdb/task/"+this.user.nodeid;
+			this.fileViewPath = 
 				"/api/u/fdb/task/"+this.user.nodeid+"/content";
-			// console.log(this.filePath,"url");
+			// console.log(this.fileViewPath,"url");
 			switch (p) {
 				case "fileone":
-					this.PdfViewer = this.filePath;
+					this.PdfViewer = this.fileViewPath;
+					this.PdfDownload = this.fileDownloadPath;
 				break;
 				case "filetwo":
-					this.PdfViewerTwo = this.filePath;
+					this.PdfViewerTwo = this.fileViewPath;
 				break;
 			}
         },
