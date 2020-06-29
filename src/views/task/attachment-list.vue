@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="app-container">
   </div> -->
-  <el-form>
+  <el-form class="attachment">
     <el-form-item label="附件" v-if="isShowPdf">
       <el-row>
 				<el-col :span="8">
@@ -50,18 +50,18 @@ export default {
 		getUser(){
 			let self = this
 			api._gets(self.$route.params.id).then(res => {
-          // self.user = res;
-          // console.log(res);
-          // self.user.state = String(res['state'])
-          self.nodeid = res['nodeid']
-          if (self.nodeid != null) {
-					this.getFileName();
-					this.getFileLink("fileone");
-          }
-			},err => {
-				console.log(err);
-        })
-    },
+			// self.user = res;
+			// console.log(res);
+			// self.user.state = String(res['state'])
+			self.nodeid = res['nodeid']
+			if (self.nodeid != null) {
+				this.getFileName();
+				this.getFileLink("fileone");
+			}
+				},err => {
+					console.log(err);
+			})
+    	},
 		getFileLink(p) {
 			this.filePath = 
 				"/api/u/fdb/task/"+this.nodeid+"/content";
@@ -74,16 +74,16 @@ export default {
 					this.PdfViewerTwo = this.filePath;
 				break;
 			}
-    },
-    getFileName(){
-			// console.log(this.user.nodeid,11111111);
-			let self = this
-      api._getOneNode(this.nodeid).then(res => {
-        self.filename = res
-				// console.log(this.filename);
-				this.isShowPdf = true
-      })
-    },
+    	},
+		getFileName(){
+				// console.log(this.user.nodeid,11111111);
+				let self = this
+				api._getOneNode(this.nodeid).then(res => {
+					self.filename = res
+					// console.log(this.filename);
+					this.isShowPdf = true
+			})
+    	},
 
 		matchType(filename){
 			// console.log(this.filename);
@@ -174,10 +174,10 @@ export default {
     margin-right: 15px;
     margin-bottom: 15px;
 }
-.el-form{
-	margin: 50px 600px 0px 20px;
+.attachment{
+  margin: 50px 600px 0px 20px;
   padding-left: 30px;
-  padding-top: 50px;
+  padding-top: 30px;
 
 }
 img{

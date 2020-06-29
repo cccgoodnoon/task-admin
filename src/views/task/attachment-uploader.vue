@@ -14,6 +14,7 @@
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       <!-- <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div> -->
     </el-upload>
+    <el-button type="primary" @click="back">上传完毕</el-button>
   </div>
 </template>
 
@@ -38,9 +39,16 @@
 import "../../service/foundation"
 
 export default {
+  computed:{
+    upData() {
+      return {
+        body: JSON.stringify(this.form)
+      }
+    }        
+  },
   methods:{
     upFile(response, file, fileList) {
-			console.log(response);
+      console.log(response);   //nodeid
 			console.log(file);
 			// console.log(fileList);
 			// console.log(fileList[0].name);
@@ -76,6 +84,13 @@ export default {
     handleRemove(res, file, fileList) {
 			this.$message.warning(`移除当前${res.name}文件，请重新选择文件上传！`);
 			this.removeFile("fileone")
+		},
+		back() {
+			this.$message({
+				message: '取消创建',
+				type: 'warning'
+			});
+			this.$router.replace('/task/list');
 		},
   }
 }

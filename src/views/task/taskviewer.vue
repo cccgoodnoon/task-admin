@@ -10,7 +10,7 @@
             <el-input v-model="user.title" readonly></el-input>
         </el-form-item>
         <el-form-item label="任务详情">
-            <el-input v-model="user.description" readonly></el-input>
+            <el-input type="textarea" v-model="user.description" readonly></el-input>
         </el-form-item>
         <el-form-item label="开始日期">
             <el-date-picker  v-model="user.begintime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd" placeholder="选择日期" style="width: 100%;" readonly>

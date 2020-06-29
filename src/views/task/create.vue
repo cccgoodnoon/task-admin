@@ -55,6 +55,7 @@
 					:on-exceed="handleExceed"
 					:data="upData"
 					:auto-upload="false"
+					:before-upload="beforeImageUpload"
 					>
 					<!-- <div slot="tip" class="el-upload__tip">请选择一个英文名称文件</div> -->
 					<el-button slot="trigger" size="small" plain type="primary">选取文件</el-button>
@@ -274,9 +275,22 @@ export default {
 				break;
 			}
 		},
+		beforeImageUpload(file) {
+			// const isTYPE = file.type === 'txt/pdf/png/jpg/jpeg/gif/doc/docx/xls/xlsx/ppt/pptx/mp4/zip/rar';
+			const isLt20M = file.size / 1024 / 1024 < 20;
+
+			// if (!isTYPE) {
+			// this.$message.error('请选择正确的文件格式!');
+			// }
+			if (!isLt20M) {
+			this.$message.error('上传文件大小不能超过 20MB!');
+			}
+			// return isTYPE && isLt20M;
+		},
         uploadFalse(response, file, fileList){
             console.log(response);
-            this.$message.error(response.message);
+			this.$message.error(response.message.slice(1,-2));  
+			//后台错误信息
         },
         // 上传文件超出个数
         handleExceed(files, fileList) {
@@ -287,17 +301,17 @@ export default {
 			this.$message.warning(`移除当前${res.name}文件，请重新选择文件上传！`);
 			this.removeFile("fileone")
 		},
-		changePdfPage (val) {
-			// console.log(val)
-			if (val === 0 && this.currentPage > 1) {
-			this.currentPage--
-			// console.log(this.currentPage)
-			}
-			if (val === 1 && this.currentPage < this.pageCount) {
-			this.currentPage++
-			// console.log(this.currentPage)
-			}
-		},
+		// changePdfPage (val) {
+		// 	// console.log(val)
+		// 	if (val === 0 && this.currentPage > 1) {
+		// 	this.currentPage--
+		// 	// console.log(this.currentPage)
+		// 	}
+		// 	if (val === 1 && this.currentPage < this.pageCount) {
+		// 	this.currentPage++
+		// 	// console.log(this.currentPage)
+		// 	}
+		// },
 
 		// pdf加载时
 		loadPdfHandler (e) {
