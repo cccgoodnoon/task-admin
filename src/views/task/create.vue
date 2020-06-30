@@ -23,7 +23,7 @@
 				<el-option label="已完成" value="1"></el-option>
 			</el-select>
 		</el-form-item>
-        <el-form-item label="上传附件1">
+        <el-form-item label="上传附件1" prop="isFile">
 			<el-row>
 				<el-col :span="8" v-if="isShowPdf">
 					<div class="avatar-uploader">
@@ -60,9 +60,9 @@
 					<!-- <div slot="tip" class="el-upload__tip">请选择一个英文名称文件</div> -->
 					<el-button slot="trigger" size="small" plain type="primary">选取文件</el-button>
 					<el-button size="small" type="success" plain @click="add()" >上传</el-button>
-					<router-link :to="`/task/attachments/new`">
+					<!-- <router-link :to="`/task/attachments/new`">
 						<el-button type="success" size="small">上传附件</el-button>
-					</router-link>
+					</router-link> -->
 					</el-upload>
 				</el-col>
 			</el-row>	
@@ -131,6 +131,7 @@ export default {
 			performer: '',
 			title: '',
 			state: '',
+			isFile:0,
 		},
 		rules: {
 			performer: [{
@@ -191,10 +192,11 @@ export default {
 		createUser() {
 			this.$refs.create.validate((valid) => {
 				if (valid) {
-				console.log(this.create);	
+				console.log(this.create);
 				api._post(this.create).then(res => {
 					this.$message.success('创建任务成功！');
 					this.reset();
+					// console.log(this.create.isFile,"创建任务之后");
 					// this.getUsers();
 					this.$router.replace('/task/list');
 				}).catch((res) => {
@@ -236,6 +238,8 @@ export default {
             if (response.status == 201) {
 				this.$message.success("上传成功");
 				self.nodeid = response.nodeid;
+				this.create.isFile = 1;
+				// console.log(this.create.isFile,"上传文件之后");
 				this.getFileLink("fileone");
 				this.isShowPdf = true
             }

@@ -69,11 +69,11 @@
 			</el-row>
         </el-form-item> 
 
-		<el-form-item>
+		<!-- <el-form-item>
 			<router-link :to="`/task/${this.$route.params.id}/attachments/update`">
 				<el-button type="success" size="small">上传附件</el-button>
 			</router-link>
-		</el-form-item>
+		</el-form-item> -->
 
         <el-form-item>
 			<el-button @click="handleCancel">取 消</el-button>
@@ -139,7 +139,7 @@ export default {
                 self.update = res;
                 // console.log(res);
 				self.update.state = String(res['state'])
-				self.update.nodeid = sessionStorage.nodeid;
+				// self.update.nodeid = sessionStorage.nodeid;
 				self.update.nodeid = res['nodeid']
 				// self.update.nodeid = localStorage.nodeid;
 				// console.log(localStorage.nodeid);
@@ -179,8 +179,7 @@ export default {
             let self = this
             if (response.status == 201) {
                 this.$message.success("上传成功");
-				// self.update.nodeid = response.nodeid;
-				self.update.nodeid = localStorage.nodeid;
+				// self.update.nodeid = localStorage.nodeid;
 				self.update.nodeid = response.nodeid;
 				// console.log(localStorage.nodeid);
                 // console.log(response.nodeid,170);
