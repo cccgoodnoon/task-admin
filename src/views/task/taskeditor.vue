@@ -60,8 +60,9 @@
 					:on-exceed="handleExceed"
 					:data="upData"
 					:auto-upload="false"
+					:before-upload="beforeImageUpload"
 					>
-					<!-- <div slot="tip" class="el-upload__tip">请选择一个英文名称文件</div> -->
+					<div slot="tip" class="el-upload__tip" style="line-height: 10px">最多上传1个文件，且文件大小不超过20MB</div>
 					<el-button slot="trigger" size="small" plain type="primary">选取文件</el-button>
 					<el-button size="small" type="success" plain @click="add()" >上传</el-button>
 					</el-upload>
@@ -172,7 +173,19 @@ export default {
         },
         add() {
             this.$refs.upload.submit()
-        },
+		},
+		beforeImageUpload(file) {
+			// const isTYPE = file.type === 'txt/pdf/png/jpg/jpeg/gif/doc/docx/xls/xlsx/ppt/pptx/mp4/zip/rar';
+			const isLt20M = file.size / 1024 / 1024 < 20;
+
+			// if (!isTYPE) {
+			// this.$message.error('请选择正确的文件格式!');
+			// }
+			if (!isLt20M) {
+			this.$message.error('上传文件大小不能超过 20MB!');
+			}
+			return isLt20M;
+		},
         // 成功上传文件
         upFile(response, file, fileList) {
             // console.log(response);
@@ -190,7 +203,7 @@ export default {
         },
         uploadFalse(response, file, fileList){
             // console.log(response);
-            this.$message.error(response.message);
+            this.$message.error(response.message.slice(1,-2));
         },
         // 上传文件超出个数
         handleExceed(files, fileList) {
@@ -198,7 +211,10 @@ export default {
         },
         // 移除文件
         handleRemove(res, file, fileList) {
-            this.$message.warning(`移除当前${res.name}文件，请重新选择文件上传！`);
+			if (file && file.status==="success"){
+				this.$message.warning(`移除当前${res.name}文件，请重新选择文件上传！`);
+				this.removeFile("fileone")
+			}
         },
 		getFileLink(p) {
 			this.fileDownloadPath=

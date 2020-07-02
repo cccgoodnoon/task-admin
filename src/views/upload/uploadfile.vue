@@ -54,12 +54,12 @@
                                 </el-table-column>
                                 <el-table-column prop="curname"
                                                 label="文件名称"
-                                                width="300">
+                                                width="200">
                                 </el-table-column>
                                 <el-table-column prop="originname"
                                                 label="文件原名"
                                                 sortable
-                                                width="300">
+                                                width="150">
                                 </el-table-column>
                                 <el-table-column prop="upddate"
                                                 label="更新时间"
