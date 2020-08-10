@@ -31,7 +31,7 @@ axios.interceptors.request.use((config) => {
   return config
 }, (error) => {
   return Promise.reject(error)
-})  
+})
 // 返回状态判断
 axios.interceptors.response.use((res) => {
   return res
@@ -98,18 +98,18 @@ export const oRemove = (url, params) => {
 export default {
   //47.111.234.116:8080
   // 127.0.0.1:5000
-  //http://47.114.154.188:8080
+  //http://47.111.234.116:8080
   _get() {
     return oGet('http://47.111.234.116:8080/api/admin/task/tasks')
   },
 
   _gets(params) {
     return oGet('http://47.111.234.116:8080/api/admin/task/tasks/' + params)
-  }, 
+  },
 
   _post(params) {
     return oPost('http://47.111.234.116:8080/api/admin/task/tasks/new',params)
-  }, 
+  },
 
   _update(id, param) {
     return oUpdate('http://47.111.234.116:8080/api/admin/task/tasks/v/' + id, param)
@@ -117,7 +117,7 @@ export default {
 
   _remove(user){
     var userid = user.id;
-    return oRemove('http://47.111.234.116:8080/api/admin/task/tasks/e/' + userid)     
+    return oRemove('http://47.111.234.116:8080/api/admin/task/tasks/e/' + userid)
   },
 
 // ------------------------------------------
@@ -145,11 +145,11 @@ export default {
 
   _updatea (id, param) {
     return oUpdate('http://47.111.234.116:8080/api/u/activity/state/'+ id, param);
-    
+
   },
 
-  _removea(uuid){      
-    return oRemove('http://47.111.234.116:8080/api/u/activity/'+ uuid);    
+  _removea(uuid){
+    return oRemove('http://47.111.234.116:8080/api/u/activity/'+ uuid);
   },
 
 
@@ -162,21 +162,24 @@ export default {
   },
   _getReport3 () {
       return oGet('http://47.111.234.116:8080//api/u/export/report3');
-  }, 
+  },
   // -----------------------------------------------------------
-  _removeNode(uuid){      
-    return oRemove('http://47.111.234.116:8080/api/u/fdb/task/'+uuid);  
+  _removeNode(uuid){
+    return oRemove('http://47.111.234.116:8080/api/u/fdb/task/'+uuid);
   },
   _getNode () {
     return oGet('http://47.111.234.116:8080/api/u/fdb/task');
   },
-  _getOneNode (uuid) { 
+  _getOneNode (uuid) {
     return oGet('http://47.111.234.116:8080/api/u/fdb/task/1/'+uuid);
   },
   _downloadNode (uuid) {
-    return oGet('http://47.111.234.116:8080/api/anon/fdb/task/'+uuid);
+    return oGet('http://47.111.234.116:8080/api/u/fdb/task/'+uuid);
   },
   _postFile (params) {
-    return oPost('http://47.111.234.116:8080/api/u/fdb/task',params);
+    return oPost('http:/47.111.234.116:8080/api/u/fdb/task',params);
+  },
+  _getFileName(uuid){
+    return oGet('http://47.111.234.116:8080/api/u/fdb/task/getFilename/'+uuid);
   }
 }
