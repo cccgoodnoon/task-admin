@@ -75,7 +75,7 @@
         }
       },
       getURL() {
-        this.uploadFileURL = "http://127.0.0.1:5000/api/u/fdb/task/updatefile/" + this.$route.query.nodeid
+        this.uploadFileURL = "http://202.120.167.50:8088/api/u/fdb/task/updatefile/" + this.$route.query.nodeid
       },
       cancel() {
         this.$router.back();

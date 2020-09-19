@@ -206,7 +206,7 @@ export default {
         const formData = new FormData();
         formData.append('file', item.raw);
         return axios({
-          url: 'http://127.0.0.1:5000/api/u/fdb/task',
+          url: 'http://202.120.167.50:8088/api/u/fdb/task',
           method: 'post',
           data: formData
         });
@@ -234,7 +234,7 @@ export default {
         data.nodeid = uuids;
 
         res = await axios({
-          url: 'http://127.0.0.1:5000/api/admin/task/tasks/new',
+          url: 'http://202.120.167.50:8088/api/admin/task/tasks/new',
           method: 'post',
           data
         });

@@ -222,10 +222,10 @@
         this.getActivities();
       },
       previewer(uuid) {
-        window.open("http://127.0.0.1:5000/api/u/fdb/task/content/" + uuid, '_blank');
+        window.open("http://202.120.167.50:8088/api/u/fdb/task/content/" + uuid, '_blank');
       },
       singeDownloadFile(uuid) {
-        downloadFile('http://127.0.0.1:5000/api/u/fdb/task/' + uuid);
+        downloadFile('http://202.120.167.50:8088/api/u/fdb/task/' + uuid);
       },
       chooseFile: function () {
         this.$router.push({
@@ -250,7 +250,7 @@
             self.update.state = String(res["state"]);
             // self.update.nodeid = sessionStorage.nodeid;
             self.update.nodeid = res["nodeid"];
-            self.uploadFileURL = "http://127.0.0.1:5000/api/u/fdb/task/updatefile/" + res['nodeid']
+            self.uploadFileURL = "http://202.120.167.50:8088/api/u/fdb/task/updatefile/" + res['nodeid']
             // self.update.nodeid = localStorage.nodeid;
             // console.log(localStorage.nodeid);
             // console.log(res['nodeid'],133);

@@ -34,13 +34,13 @@
           </router-link>
         </template>
       </el-table-column>
-      <el-table-column label="Title" width="155" prop="title" align="center">
+      <el-table-column label="任务名" width="155" prop="title" align="center">
         <template slot-scope="scope">
           {{ scope.row.title }}
         </template>
       </el-table-column>
       <el-table-column
-        label="performer"
+        label="负责人"
         width="110"
         align="center"
         prop="performer"

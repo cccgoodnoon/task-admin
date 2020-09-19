@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '同济大学任务管理后台',
 
   /**
    * @type {boolean} true | false
