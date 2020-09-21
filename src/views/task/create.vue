@@ -144,7 +144,8 @@ export default {
           },
           {
             min: 1,
-            max: 25
+            max: 35,
+            message: "长度在 2 到 35 个字符"
           }
         ],
         state: [
@@ -157,7 +158,7 @@ export default {
       pageCount: 0, // pdf文件总页数
       fileType: "pdf", // 文件类型
       isShowPdf: false,
-      isShowPdfTwo: false,
+      // isShowPdfTwo: false,
       PdfViewer: "javascript:;",
       PdfViewerTwo: "javascript:;"
     };

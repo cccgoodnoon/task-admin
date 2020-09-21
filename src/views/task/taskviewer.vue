@@ -33,7 +33,7 @@
 
     <el-form-item label="附件">
       <el-row>
-        <el-col :span="8" v-for="item in this.file_list">
+        <el-col :span="8" v-for="item in this.file_list" :key=item>
           <div class="avatar-uploader">
             <img width="40" height="40" :src="require('../../assets/file/'+matchType(item.filename)+'.png')">
             <p>{{item.filename}}</p>
@@ -107,28 +107,28 @@
           self.user.nodeid = res['nodeid']
           if (self.user.nodeid != null && self.user.nodeid != 'None') {
             this.getFileName();
-            this.getFileLink("fileone");
+            // this.getFileLink("fileone");
           }
         }, err => {
           console.log(err);
         })
       },
-      getFileLink(p) {
-        this.fileDownloadPath =
-          "/api/u/fdb/task/" + this.user.nodeid;
-        this.fileViewPath =
-          "/api/u/fdb/task/" + this.user.nodeid + "/content";
-        // console.log(this.fileViewPath,"url");
-        switch (p) {
-          case "fileone":
-            this.PdfViewer = this.fileViewPath;
-            this.PdfDownload = this.fileDownloadPath;
-            break;
-          case "filetwo":
-            this.PdfViewerTwo = this.fileViewPath;
-            break;
-        }
-      },
+      // getFileLink(p) {
+      //   this.fileDownloadPath =
+      //     "/api/u/fdb/task/" + this.user.nodeid;
+      //   this.fileViewPath =
+      //     "/api/u/fdb/task/" + this.user.nodeid + "/content";
+      //   // console.log(this.fileViewPath,"url");
+      //   switch (p) {
+      //     case "fileone":
+      //       this.PdfViewer = this.fileViewPath;
+      //       this.PdfDownload = this.fileDownloadPath;
+      //       break;
+      //     case "filetwo":
+      //       this.PdfViewerTwo = this.fileViewPath;
+      //       break;
+      //   }
+      // },
       getFileName() {
         // console.log(this.user.nodeid,11111111);
         let self = this
