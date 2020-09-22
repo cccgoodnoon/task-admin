@@ -34,7 +34,7 @@ import Layout from "@/layout";
 export const constantRoutes = [
   {
     path: "/login",
-    component: () => import("@/views/login/index"),
+    component: () => import("@/views/auth/login"),
     hidden: true
   },
   // {
@@ -78,19 +78,19 @@ export const constantRoutes = [
       {
         path: "task/list",
         name: "任务列表",
-        component: () => import("@/views/task/tasklist"),
+        component: () => import("@/views/task/task-list"),
         meta: { title: "任务列表", icon: "table" }
       },
       {
         path: "task/create",
         name: "创建任务",
-        component: () => import("@/views/task/create"),
+        component: () => import("@/views/task/task-creator"),
         meta: { title: "创建任务", icon: "form", keepAlive: true }
       },
       {
         path: "task/edit/:id",
         name: "修改任务",
-        component: () => import("@/views/task/taskeditor"),
+        component: () => import("@/views/task/task-editor"),
         meta: { title: "修改任务", icon: "el-icon-s-order" },
         hidden: true
       },
@@ -98,7 +98,7 @@ export const constantRoutes = [
         path: "task/view/:id",
         name: "任务详情",
         meta: { title: "任务详情", icon: "fa fa-list-alt" },
-        component: () => import("@/views/task/taskviewer"),
+        component: () => import("@/views/task/task-viewer"),
         hidden: true
       },
       {

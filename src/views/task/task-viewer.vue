@@ -1,10 +1,42 @@
 <template>
-  <!-- <div class="app-container">
-  </div> -->
-  <el-form class="attachment">
+  <el-form @submit.native.prevent="back" :model="user" label-width="100px" readonly: true>
+    <el-form-item label="ID">
+      <el-input v-model="user.id" readonly></el-input>
+    </el-form-item>
+    <el-form-item label="负责人">
+      <el-input v-model="user.performer" readonly></el-input>
+    </el-form-item>
+    <el-form-item label="任务说明">
+      <el-input v-model="user.title" readonly></el-input>
+    </el-form-item>
+    <el-form-item label="任务详情">
+      <el-input type="textarea" v-model="user.description" readonly></el-input>
+    </el-form-item>
+    <el-form-item label="开始日期">
+      <el-date-picker v-model="user.begintime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"
+                      placeholder="选择日期" style="width: 100%;" readonly>
+      </el-date-picker>
+    </el-form-item>
+    <el-form-item label="截止日期">
+      <el-date-picker v-model="user.endtime" type="date" format="yyyy 年 MM 月 dd 日" value-format="yyyy-MM-dd"
+                      placeholder="选择日期" style="width: 100%;" readonly>
+      </el-date-picker>
+    </el-form-item>
+    <el-form-item label="是否完成">
+      <el-select v-model="user.state" prop="state" :disabled=true>
+        <el-option label="已完成" value="1"></el-option>
+        <el-option label="未完成" value="0"></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item label=任务可见 >
+      <el-select v-model="user.categoryid" prop="categoryid" :disabled=true>
+        <el-option label="全部人可见" value="0"></el-option>
+        <el-option label="仅老师可见" value="1"></el-option>
+      </el-select>
+    </el-form-item>
     <el-form-item label="附件">
       <el-row>
-        <el-col :span="8" v-for="item in this.file_list">
+        <el-col :span="8" v-for="item in this.file_list" :key=item>
           <div class="avatar-uploader">
             <img width="40" height="40" :src="require('../../assets/file/'+matchType(item.filename)+'.png')">
             <p>{{item.filename}}</p>
@@ -15,81 +47,88 @@
             <a @click="previewer(item.uuid)" target="_blank" title="点击预览">
               <i class="el-icon-zoom-in"></i>
             </a>
+            <a @click="singeDownloadFile(item.uuid)" title="点击下载">
+              <i class="el-icon-download"></i>
+            </a>
           </div>
         </el-col>
       </el-row>
     </el-form-item>
-  </el-form>
-</template>
 
+    <el-form-item>
+      <el-button type="primary" native-type="submit">返回列表</el-button>
+      <router-link :to="`/task/${this.$route.params.id}/attachments`">
+        <el-button type="success">查看所有附件</el-button>
+      </router-link>
+    </el-form-item>
+  </el-form>
+
+</template>
 <script>
-  // Requirement
-  // 支持参数：
-  // - url: 服务端获取附件list的url，例如/task/{id}/attachments，
-  // - taskid: 任务标识
-  // - readonly: true or false
-  // 功能要求
-  // - 调用服务端restful接口并从服务端取得attachments数据，以list风格显示。包括文件名、大小、上传日期
-  // - 支持如下操作：download、open和删除。如果readonly为true，则隐掉删除按钮。
-  //
-  import "../../service/foundation"
   import api from "../../utils/auth"
 
+  export const downloadFile = (url) => {
+    const iframe = document.createElement("iframe");
+    iframe.style.display = "none";  // 防止影响页面
+    iframe.style.height = 0;  // 防止影响页面
+    iframe.src = url;
+    document.body.appendChild(iframe);  // 这一行必须，iframe挂在到dom树上才会发请求
+    // 5分钟之后删除（onload方法对于下载链接不起作用，就先抠脚一下吧）
+    setTimeout(() => {
+      iframe.remove();
+    }, 5 * 60 * 1000);
+  }
   export default {
     data() {
       return {
         user: {},
         isShowPdf: false,
         PdfViewer: "javascript:;",
-        file_list: [],
+        PdfDownload: "javascript:;",
+        file_list: []
       }
     },
     mounted() {
       this.getUser();
     },
     methods: {
+      singeDownloadFile(uuid) {
+        downloadFile('http://202.120.167.50:8088/api/u/fdb/task/' + uuid);
+      },
+      previewer(uuid) {
+        window.open("http://202.120.167.50:8088/api/u/fdb/task/content/" + uuid, '_blank');
+      },
+      reset() {
+        this.$refs.create.resetFields();
+      },
       getUser() {
         let self = this
         api._gets(self.$route.params.id).then(res => {
-          // self.user = res;
-          // console.log(res);
-          // self.user.state = String(res['state'])
-          self.nodeid = res['nodeid']
-          if (self.nodeid != null) {
+          self.user = res;
+          console.log(res);
+          self.user.categoryid = String(res["categoryid"]);
+          self.user.state = String(res['state'])
+          self.user.nodeid = res['nodeid']
+          if (self.user.nodeid != null && self.user.nodeid != 'None') {
             this.getFileName();
-            this.getFileLink("fileone");
+            // this.getFileLink("fileone");
           }
         }, err => {
           console.log(err);
         })
       },
-      previewer(uuid) {
-        window.open("http://127.0.0.1:5000/api/u/fdb/task/content/" + uuid, '_blank');
-      },
-      getFileLink(p) {
-        this.filePath =
-          "/api/u/fdb/task/" + this.nodeid + "/content";
-        // console.log(this.filePath,"url");
-        switch (p) {
-          case "fileone":
-            this.PdfViewer = this.filePath;
-            break;
-          case "filetwo":
-            this.PdfViewerTwo = this.filePath;
-            break;
-        }
-      },
-
       getFileName() {
         // console.log(this.user.nodeid,11111111);
         let self = this
-        api._getFileName(this.nodeid).then(res => {
-          this.file_list = res;
+        api._getFileName(this.user.nodeid).then(res => {
+          this.file_list = res
           // console.log(this.filename);
           this.isShowPdf = true
         })
       },
-
+      back() {
+        this.$router.replace('/task/list');
+      },
       matchType(filename) {
         // console.log(this.filename);
         var suffix = ''
@@ -172,19 +211,9 @@
     }
   }
 </script>
-
 <style>
-  .actions {
-    float: left;
-    margin-right: 15px;
-    margin-bottom: 15px;
-  }
-
-  .attachment {
+  .el-form {
     margin: 50px 600px 0px 20px;
-    padding-left: 30px;
-    padding-top: 30px;
-
   }
 
   img {

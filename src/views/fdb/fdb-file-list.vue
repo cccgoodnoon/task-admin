@@ -172,7 +172,7 @@
         for (let item in this.$refs.test.selection) {
           let uuid = this.tables[item].uuid;
           let curname = this.tables[item].curname;
-          downloadFile('http://202.120.167.50:8088/api/u/fdb/task/' + uuid);
+          downloadFile('http://127.0.0.1:5000/api/u/fdb/task/' + uuid);
         }
       },
 
@@ -255,7 +255,7 @@
         this.$message.error(response.message);
       },
       downloadNode(index, row) {
-        var down = 'http://202.120.167.50:8088/api/u/fdb/task/' + row.uuid
+        var down = 'http://127.0.0.1:5000/api/u/fdb/task/' + row.uuid
         window.location.href = down
         console.log(row, 1111);
 
