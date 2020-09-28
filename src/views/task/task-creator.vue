@@ -117,7 +117,7 @@ export default {
   name: "create",
   data() {
     return {
-      // url:"http://127.0.0.1:5000/api/u/fdb/task",
+      // url:"http://:5000/api/u/fdb/task",
       form: {},
       create: {
         description: "",
@@ -199,7 +199,7 @@ export default {
     },
     // getUsers(){
     // 	let self = this
-    // 	api._get().then(res => {
+    // 	get().then(res => {
     // 		self.users = res;
     // 		console.log(res.data);
     // 		console.log(res,8888);
@@ -214,7 +214,7 @@ export default {
         const formData = new FormData();
         formData.append('file', item.raw);
         return axios({
-          url: 'http://127.0.0.1:5000/api/u/fdb/task',
+          url: '/api/u/fdb/task',
           method: 'post',
           data: formData
         });
@@ -241,7 +241,7 @@ export default {
         data.nodeid = uuids;
 
         res = await axios({
-          url: 'http://127.0.0.1:5000/api/admin/task/tasks/new',
+          url: '/api/admin/task/tasks/new',
           method: 'post',
           data
         });

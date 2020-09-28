@@ -32,8 +32,9 @@
   // - 调用服务端restful接口并从服务端取得attachments数据，以list风格显示。包括文件名、大小、上传日期
   // - 支持如下操作：download、open和删除。如果readonly为true，则隐掉删除按钮。
   //
+  import { gets,getFileName } from "../../api/api";
   import "../../service/foundation"
-  import api from "../../utils/auth"
+  // import api from "../../utils/auth"
 
   export default {
     data() {
@@ -50,7 +51,7 @@
     methods: {
       getUser() {
         let self = this
-        api._gets(self.$route.params.id).then(res => {
+        gets(self.$route.params.id).then(res => {
           // self.user = res;
           // console.log(res);
           // self.user.state = String(res['state'])
@@ -64,7 +65,8 @@
         })
       },
       previewer(uuid) {
-        window.open("http://127.0.0.1:5000/api/u/fdb/task/content/" + uuid, '_blank');
+        window.open("/api/u/fdb/task/content/" + uuid, '_blank');
+        // window.open("http://202.120.167.50:8088/api/u/fdb/task/content/" + uuid, '_blank');
       },
       getFileLink(p) {
         this.filePath =
@@ -83,7 +85,7 @@
       getFileName() {
         // console.log(this.user.nodeid,11111111);
         let self = this
-        api._getFileName(this.nodeid).then(res => {
+        getFileName(this.nodeid).then(res => {
           this.file_list = res;
           // console.log(this.filename);
           this.isShowPdf = true

@@ -106,10 +106,11 @@
 </template>
 <script>
   import {mapMutations} from "vuex";
-  import api from "../../utils/auth";
-  import CONFIG_API_BASE_URL from "../../conf/config";
-  import axios from "axios";
-
+  // import api from "../../utils/auth";
+  // import CONFIG_API_BASE_URL from "../../conf/config";
+  // import axios from "axios";
+  import { gets,update,getFileName,removeNode } from "../../api/api";
+  import service from '@/utils/request';
   export const downloadFile = (url) => {
     const iframe = document.createElement("iframe");
     iframe.style.display = "none";  // 防止影响页面
@@ -140,11 +141,6 @@
           categoryid:""
         },
         uploadFileURL: "",
-        // url:"http://127.0.0.1:5000/api/u/fdb/task",
-        // form: {
-        //     ipArea: "",
-        //     sourceMachineIp: ""
-        // },
         updateRules: {
           performer: [
             {
@@ -184,7 +180,7 @@
     },
     mounted() {
       this.getUser();
-      console.log("请求数据");
+      // console.log("请求数据");
     },
     computed: {
       upData() {
@@ -199,10 +195,14 @@
         this.getActivities();
       },
       previewer(uuid) {
-        window.open("http://127.0.0.1:5000/api/u/fdb/task/content/" + uuid, '_blank');
+        let baseurl = process.env.VUE_APP_BASE_API
+        // window.open("http://202.120.167.50:8088/api/u/fdb/task/content/" + uuid, '_blank');
+        window.open("/api/u/fdb/task/content/" + uuid, '_blank');
       },
       singeDownloadFile(uuid) {
-        downloadFile('http://127.0.0.1:5000/api/u/fdb/task/' + uuid);
+        downloadNode().then(res=>{
+          this.$message.success('成功下载');
+        })
       },
       chooseFile: function () {
         this.$router.push({
@@ -220,13 +220,13 @@
       },
       getUser() {
         let self = this;
-        api._gets(self.$route.params.id).then(
+        gets(self.$route.params.id).then(
           res => {
             self.update = res;
             self.update.state = String(res["state"]);
             self.update.categoryid = String(res["categoryid"]);
             self.update.nodeid = res["nodeid"];
-            self.uploadFileURL = "http://127.0.0.1:5000/api/u/fdb/task/updatefile/" + res['nodeid']
+            self.uploadFileURL = "/api/u/fdb/task/updatefile/" + res['nodeid']
             if (self.update.nodeid != null && self.update.nodeid != "None") {
               this.getFileName();
               this.getFileLink("fileone");
@@ -238,7 +238,7 @@
         );
       },
       updateUser() {
-        api._update(this.$route.params.id, this.update).then(res => {
+        update(this.$route.params.id, this.update).then(res => {
           this.$message({
             message: "任务修改成功",
             type: "success"
@@ -312,7 +312,7 @@
       getFileName() {
         // console.log(this.update.nodeid,201);
         let self = this;
-        api._getFileName(this.update.nodeid).then(res => {
+        getFileName(this.update.nodeid).then(res => {
           // console.log(res,205);
           this.file_list = res;
           if (res == "没有附件") {
@@ -325,12 +325,11 @@
         });
       },
       removeFile(uuid) {
-        api._removeNode(uuid).then(res => {
+        removeNode(uuid).then(res => {
           this.getUser();
         });
       },
       matchType(filename) {
-        // console.log(this.filename,230);
         var suffix = "";
         var result = "";
         try {
@@ -367,7 +366,7 @@
           result = "pdf";
           return result;
         }
-        var doclist = ["doc"];
+        var doclist = ["doc","docx"];
         result = doclist.some(function (item) {
           return item === suffix;
         });
@@ -375,7 +374,7 @@
           result = "doc";
           return result;
         }
-        var pptlist = ["ppt"];
+        var pptlist = ["ppt","pptx"];
         result = pptlist.some(function (item) {
           return item === suffix;
         });

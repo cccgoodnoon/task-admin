@@ -109,8 +109,8 @@
 
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
-import api from "../../utils/auth";
-
+// import api from "../../utils/auth";
+import { getByAuth,remove } from "../../api/api";
 export default {
   filters: {
     getStateName(state) {
@@ -127,6 +127,7 @@ export default {
       row: null,
       search: "",
       listLoading: true,
+      securitylevel: 0,
       filter: {
         id: "",
         description: "",
@@ -156,14 +157,9 @@ export default {
     }
   },
   mounted() {
-    // this.getUsers();
     this.getTasks();
-    // this.SET_MEMBERLLEVEL();
   },
   methods: {
-    ...mapMutations({
-      SET_MEMBERLLEVEL: "user/login"
-    }),
     handleEditDuty(row) {
       this.$router.push(`/task/edit/${row.id}`);
     },
@@ -173,23 +169,28 @@ export default {
 
     getTasks() {
       this.listLoading = true;
-      // a = this.$store.SET_MEMBERLLEVEL
-      // a=this.$store.state.user["token"]
-      // b=a["securitylevel"]
-      // securitylevel =this.$store.state.user["token"].securitylevel
-      console.log(this.$store.state.user.securitylevel);
-      // console.log(a);
-      let self = this;
-      api._get().then(
-        res => {
+      
+      this.securitylevel = parseInt(this.$store.state.user.securitylevel)
+      console.log(this.securitylevel);
+      // get().then(
+      //   res => {
+      //     self.users = res;
+      //     console.log(res,8888);
+      //     this.listLoading = false;
+      //   },
+      //   err => {
+      //     console.log(err);
+      //   }
+      // );
+      getByAuth(this.securitylevel).then(
+        res=> {
+          let self = this
           self.users = res;
-          // console.log(res,8888);
-          this.listLoading = false;
-        },
-        err => {
-          console.log(err);
-        }
-      );
+          self.listLoading = false;
+        },err=>{
+            console.log(err);
+          }
+      )
     },
     removeUser(index, row) {
       console.log(index, row);
@@ -197,15 +198,13 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
-      })
-        .then(() => {
+      }).then(() => {
           this.handleDelete(index, row);
           this.$message({
             type: "success",
             message: "成功删除了任务——" + row.title + " !"
           });
-        })
-        .catch(() => {
+        }).catch(() => {
           this.$message({
             type: "info",
             message: "已取消删除"
@@ -213,9 +212,9 @@ export default {
         });
     },
     handleDelete(index, row) {
-      api._remove(row).then(res => {
+      remove(row).then(res => {
         this.users.splice(index, 1);
-        this.getUsers();
+        this.getTasks();
       });
     }
   }

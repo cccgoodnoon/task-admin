@@ -15,6 +15,7 @@ const name = defaultSettings.title || 'vue Admin' // page title
 // port = 9528 npm run dev OR npm run dev --port = 9528
 const port = process.env.port || process.env.npm_config_port || 8080 // dev port
 
+const baseurl = process.env.VUE_APP_BASE_API
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
   /**
@@ -41,31 +42,53 @@ module.exports = {
     // ws: false,
     proxy: {
       '/api/u/fdb/task': {
-        target: 'http://47.111.234.116:8080',
-        // target: 'http://127.0.0.1:5000',
+        target: baseurl,
         ws: true,
         changeOrigin: true,
         pathRewrite:{
           '^/':'/' 
         }
       },
-      '/api/u/fdb/m/task': {
-        target: 'http://47.111.234.116:8080',
-        // target: 'http://127.0.0.1:5000',
+      '/api/admin/task/tasks/new': {
+        target: baseurl,
         ws: true,
         changeOrigin: true,
         pathRewrite:{
           '^/':'/' 
         }
       },
-      // '/api': {
-      //   target: 'http://47.111.234.116:8081',
-      //   ws: true,
-      //   changeOrigin: true,
-      //   pathRewrite:{
-      //     '^/api':'/api' 
-      //   }
-      // }
+      '/api/u/export/report2': {
+        target: baseurl,
+        ws: true,
+        changeOrigin: true,
+        pathRewrite:{
+          '^/':'/' 
+        }
+      },
+      '/api/u/export/report3': {
+        target: baseurl,
+        ws: true,
+        changeOrigin: true,
+        pathRewrite:{
+          '^/':'/' 
+        }
+      },      
+      '/api/u/fdb/task/updatefile/': {
+        target: baseurl,
+        ws: true,
+        changeOrigin: true,
+        pathRewrite:{
+          '^/':'/' 
+        }
+      },
+      '/api/u/fdb/task/content/': {
+        target: baseurl,
+        ws: true,
+        changeOrigin: true,
+        pathRewrite:{
+          '^/':'/' 
+        }
+      },
     }
     // before: require('./mock/mock-server.js')  //注释掉这句
   },

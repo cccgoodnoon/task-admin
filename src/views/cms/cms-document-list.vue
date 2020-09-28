@@ -352,10 +352,10 @@
                 })
             },
             getReport2(){
-                window.location.href = "http://127.0.0.1:5000/api/u/export/report2"
+                window.location.href = "/api/u/export/report2"
             },
             getReport3(){
-                window.location.href = "http://127.0.0.1:5000/api/u/export/report3"
+                window.location.href = "/api/u/export/report3"
 
             },
 

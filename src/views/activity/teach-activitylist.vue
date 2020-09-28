@@ -187,6 +187,7 @@
     } from 'vuex';
     // import api from '../api/service.js'
     import api from "../../utils/auth"
+    import { geta,post,remove,update,removes } from "../../api/api";
     export default {
         name:'',
         data : function () {
@@ -343,7 +344,7 @@
             //获取任务数据
             getActivities(){
                 let self = this
-                api._geta().then(res => {
+                geta().then(res => {
                     self.activities  = res;
                     // console.log(res.data);
                     // console.log(res,8888);
@@ -352,22 +353,17 @@
                 })
             },
             getReport2(){
-                window.location.href = "http://127.0.0.1:5000/api/u/export/report2"
+                window.location.href = '/api/u/export/report2'
             },
             getReport3(){
-                window.location.href = "http://127.0.0.1:5000/api/u/export/report3"
+                window.location.href = "/api/u/export/report3"
 
             },
-
-            getMemberByCourseName(){
-
-            },
-
             //创建任务
             createActivity() {
                 this.$refs.create.validate((valid) => {
                     if (valid) {
-                        api._post(this.create).then(res => {
+                        post(this.create).then(res => {
                             this.$message.success('创建课程分配成功！');
                             this.dialogCreateVisible = false;
                             this.createLoading = false;
@@ -393,7 +389,7 @@
             updateActivity() {
                 this.$refs.update.validate((valid) => {
                     if (valid) {
-                        api._update(this.currentId, this.update).then(res => {
+                        update(this.currentId, this.update).then(res => {
                             this.$message.success('修改课程分配成功！');
                             this.dialogUpdateVisible = false;
                             this.getActivities();
@@ -417,7 +413,7 @@
                 this.$confirm('是否要删除改课程分配 ' + activity.title + ' ?', '提示', {
                   type: 'warning'
                 }).then(() => {
-                    api._remove(activity).then(res => {
+                    remove(activity).then(res => {
                         this.$message.success('成功删除了该课程分配' + activity.title + ' !');
                         this.getActivities();
                         console.log(activity.id);
@@ -434,7 +430,7 @@
                 this.$confirm('此操作将永久删除 ' + this.selected.length + ' 个课程分配, 是否继续?', '提示', {
                     type: 'warning'
                 }).then(() => {
-                    api._removes().then(res =>{
+                    removes().then(res =>{
                         this.$message.success('删除了' + this.selected.length + '个任务!');
                         this.getActivities();
                     }).catch((res) => {

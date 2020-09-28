@@ -133,6 +133,7 @@
 </template>
 
 <script>
+    import { getOM,getOC,getM,getC,getA,posta,removea,updatea } from "../../api/api";
     import {
         mapState,
         mapMutations,
@@ -225,84 +226,30 @@
                     let array=val.pop();
                     this.$refs.activityTable.toggleRowSelection(array,true);
                     this.actiSelected=array;
-                    // console.log(array);
-                    // document.getElementById("teacher").innerHTML=array.firstname; 
                 } 
                 if (val.length == 1) {
                     this.$refs.activityTable.toggleRowSelection(val,false);
                     this.actiSelected=val;
                     this.course_name = val[0].name;
-                    // console.log(val);
-                    // this.state = val[0].objectstate;
                     this.uuid = val[0].uuid;
-                    // console.log(this.uuid);
-                    // console.log("复选框状态",this.state);
                 }
- 
-            },
-            // memberTableSelection(val) {
-            //     if (val.length > 1) {
-            //         this.$refs.memberTable.clearSelection();
-            //         let array=val.pop();
-            //         this.$refs.memberTable.toggleRowSelection(array,true);
-            //         this.selected=array;
-            //         // document.getElementById("teacher").innerHTML=array.firstname; 
-            //     } 
-            //     if (val.length == 1) {
-            //         this.$refs.memberTable.toggleRowSelection(val,false);
-            //         this.selected=val;
-            //         // document.getElementById("teacher").innerHTML=val.firstname;
-            //     } 
-            // },
-            // courseTableSelection(val) {
-            //     if (val.length > 1) {
-            //         this.$refs.courseTable.clearSelection();
-            //         let array=val.pop();
-            //         this.$refs.courseTable.toggleRowSelection(array,true);
-            //         this.courseSelected=array;
-            //         // document.getElementById("teacher").innerHTML=array.firstname; 
-            //     } 
-            //     if (val.length == 1) {
-            //         this.$refs.courseTable.toggleRowSelection(val,false);
-            //         this.courseSelected=val;
-            //         // document.getElementById("teacher").innerHTML=val.firstname;
-            //     } 
-            // }, 
-            //点击行            
+            },           
             handleMember(row, event, column) {
-                // console.log("老师名字",row.firstname);
                 this.$refs.memberTable.toggleRowSelection(row);
-                // document.getElementById("teacher").innerHTML=row.firstname;
-                api._getOM(row.id).then(res => {
-                    // console.log("这行内容",row);
-                    // console.log("这个老师",res);
+                getOM(row.id).then(res => {
                     this.member_uuid = res[0].uuid;
-                    // console.log("当前老师uuid",this.member_uuid);
                     this.getActivity(this.member_uuid);
                 })
                 this.$refs.memberTable.clearSelection();           
             },
             handleCourse(row, event, column) {
                 this.$refs.courseTable.toggleRowSelection(row)
-                // this.getOneCourse()
-                // console.log(row);
-                api._getOC(row.id).then(res => {
-                    // console.log(row);
-                    // console.log(this.course.id);
-                    // console.log("当前课程id",row.id);
+                getOC(row.id).then(res => {
                     this.course_uuid = res[0].uuid;
-                    this.course_credit = res[0].credit;
-                    // console.log("当前课程uuid",this.course_uuid);
-                    // console.log("当前课程学分",this.course_credit);
                 })
             },
             handleActivity(row, event, column) {
-                // console.log("该老师课程",this.activity);
-                // console.log("该行信息",row);
-                // console.log("该行id",row.id);
-                // console.log("该行点击时状态",row.objectstate);
                 this.state = row.objectstate
-                // console.log(this.state);
                 this.update = {'state':row.objectstate}              
                 this.$refs.activityTable.toggleRowSelection(row)
                 this.currentId = row.id;
@@ -311,7 +258,7 @@
             },
             getMember(){
                 let self = this
-                api._getM().then(res => {
+                getM().then(res => {
                     // console.log(res);
                     self.member = res;
                 },err => {
@@ -320,7 +267,7 @@
             },
             getCourse(){
                 let self = this
-                api._getC().then(res => {
+                getC().then(res => {
                     self.course = res;
                 },err => {
                     console.log(err);
@@ -328,22 +275,18 @@
             },            
             getActivity(id){
                 let self = this
-                api._getA(this.member_uuid).then(res =>{
-                    // console.log(res);
+                getA(this.member_uuid).then(res =>{
                     self.activity = res;
                 },err => {
                     console.log(err);
                 })
             },
             addActivity(){
-                // console.log("选择框课程状态",this.objectvalue);
                 if(this.course_uuid != ''&&this.member_uuid != ''&&this.timeValue != ''&&this.objectvalue !=''){
-                    api._posta({course_uuid:this.course_uuid,course_credit:this.course_credit,member_uuid:this.member_uuid,timeValue:this.timeValue,objectvalue:this.objectvalue}).then(res =>{
+                    posta({course_uuid:this.course_uuid,course_credit:this.course_credit,member_uuid:this.member_uuid,timeValue:this.timeValue,objectvalue:this.objectvalue}).then(res =>{
                         this.$message.success('成功为该老师添加一门课！');
-                        // this.getMember();
                         this.getCourse();
                         this.getActivity();
-                        // this.timeValue = '';
                     },err => {
                         console.log(err);
                     })                    
@@ -355,28 +298,13 @@
                     this.$message.warning('请选择课程开始时间!');
                 } else if (this.objectvalue == '') {
                     this.$message.warning('请选择课程状态!');
-                }
-                // console.log("当前课程uuid",this.course_uuid);
-                // console.log("当前课程学分",this.course_credit);
-                // console.log("当前老师uuid",this.member_uuid);
-                // console.log("选择框时间",this.timeValue);                               
+                }                            
             },
             removeActivity(){
-                // console.log(this.course_name);
-                // console.log(this.member_uuid);
-                // console.log(this.uuid);
                 this.$confirm('此操作将删除该老师的 ' + this.actiSelected.length + ' 门课程, 是否继续?','提示', {
                   type: 'warning'
                 }).then(() => {
-                    // api._remove(this.course_name,this.member_uuid).then(res => {
-                    //     this.$message.success('成功删除了课程!');
-                    //     // this.getMember();
-                    //     // this.getCourse();
-                    //     this.getActivity();
-                    // }).catch((res) => {
-                    //     this.$message.error('删除失败!');
-                    // });
-                    api._removea(this.uuid).then(res => {
+                    removea(this.uuid).then(res => {
                         this.$message.success('成功删除了课程!');
                         this.getActivity();
                     }).catch((res) => {
@@ -387,11 +315,9 @@
                 });
             },
             updateState(){
-                // console.log("id",this.currentId);
-                // console.log("选择的状态",this.update)
                 this.$refs.update.validate((valid) => {
                     if (valid) {
-                        api._updatea(this.currentId, this.update).then(res => {
+                        updatea(this.currentId, this.update).then(res => {
                             this.$message.success('修改课程状态成功！');
                             this.dialogUpdateVisible = false;
                             this.getActivity();

@@ -69,13 +69,14 @@
         this.setFileList(this.fileList);
         if (this.$route.query.nodeid != null) {
           this.$refs.upload.submit();
-          this.$router.back();
+          setTimeout(this.$router.back(),1000)
+          // this.$router.back();
         } else {
           this.$router.back();
         }
       },
       getURL() {
-        this.uploadFileURL = "http://127.0.0.1:5000/api/u/fdb/task/updatefile/" + this.$route.query.nodeid
+        this.uploadFileURL = "/api/u/fdb/task/updatefile/" + this.$route.query.nodeid
       },
       cancel() {
         this.$router.back();

@@ -79,7 +79,7 @@
                   width="200">
                   <template slot-scope="scope">
                     <el-button type="success" size="small" @click="downloadNode(scope.$index, scope.row)">下载</el-button>
-                    <el-button type="danger" size="small" @click="removeNode(scope.$index, scope.row)">删除</el-button>
+                    <el-button type="danger" size="small" @click="removeNodes(scope.$index, scope.row)">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -99,9 +99,9 @@
     mapActions
   } from 'vuex';
   import api from "../../utils/auth"
-  import table from "../../../mock/table";
-
-  export const downloadFile =                                                                                                                                                                                                                                                                                  (url) => {
+  // import table from "../../../mock/table";
+  import { removeNode,getNode,downloadNode} from "../../api/api";
+  export const downloadFile = (url) => {
     const iframe = document.createElement("iframe");
     iframe.style.display = "none";  // 防止影响页面
     iframe.style.height = 0;  // 防止影响页面
@@ -155,10 +155,11 @@
     },
     methods: {
       multiDelete() {
+
         for (let item in this.$refs.test.selection) {
           let uuid = this.tables[item].uuid;
           let curname = this.tables[item].curname;
-          api._removeNode(uuid).then(res => {
+          removeNode(uuid).then(res => {
             this.$message.success('成功删除了该文件' + curname + ' !');
             this.getActivities();
             // console.log(row.id);
@@ -172,7 +173,9 @@
         for (let item in this.$refs.test.selection) {
           let uuid = this.tables[item].uuid;
           let curname = this.tables[item].curname;
-          downloadFile('http://127.0.0.1:5000/api/u/fdb/task/' + uuid);
+          downloadNode().then(res=>{
+            this.$message.success('成功下载');
+          })
         }
       },
 
@@ -204,7 +207,7 @@
       },
       getActivities() {
         let self = this
-        api._getNode().then(res => {
+        getNode().then(res => {
           self.activities = res;
           // console.log(res,8888);
         }, err => {
@@ -212,11 +215,11 @@
         })
       },
       // 删除单个node
-      removeNode(index, row) {
+      removeNodes(index, row) {
         this.$confirm('是否要删除' + row.curname + ' ?', '提示', {
           type: 'warning'
         }).then(() => {
-          api._removeNode(row.uuid).then(res => {
+          removeNode(row.uuid).then(res => {
             this.$message.success('成功删除了该文件' + row.curname + ' !');
             this.getActivities();
             // console.log(row.id);
@@ -238,7 +241,7 @@
       //     // };
       //     console.log(formData);
 
-      //     api._postFile({data:formData}).then((data) => {
+      //     postFile({data:formData}).then((data) => {
       //         // var src = URL.createObjectURL(upload.file);
       //         console.log(data);
       //     }).catch((err)=> {
@@ -255,11 +258,11 @@
         this.$message.error(response.message);
       },
       downloadNode(index, row) {
-        var down = 'http://127.0.0.1:5000/api/u/fdb/task/' + row.uuid
+        var down = '/api/u/fdb/task/' + row.uuid
         window.location.href = down
         console.log(row, 1111);
 
-        // api._downloadNode(row.uuid).then(res => {
+        // downloadNode(row.uuid).then(res => {
         //     this.$message.success('成功下载了该文件' + row.originname + ' !');
         //     console.log(res);
         //     // res = window.location.href

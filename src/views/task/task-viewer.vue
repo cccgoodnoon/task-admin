@@ -36,7 +36,7 @@
     </el-form-item>
     <el-form-item label="附件">
       <el-row>
-        <el-col :span="8" v-for="item in this.file_list" :key=item>
+        <el-col :span="8" v-for="item in this.file_list">
           <div class="avatar-uploader">
             <img width="40" height="40" :src="require('../../assets/file/'+matchType(item.filename)+'.png')">
             <p>{{item.filename}}</p>
@@ -57,23 +57,22 @@
 
     <el-form-item>
       <el-button type="primary" native-type="submit">返回列表</el-button>
-      <router-link :to="`/task/${this.$route.params.id}/attachments`">
+      <!-- <router-link :to="`/task/${this.$route.params.id}/attachments`">
         <el-button type="success">查看所有附件</el-button>
-      </router-link>
+      </router-link> -->
     </el-form-item>
   </el-form>
 
 </template>
 <script>
-  import api from "../../utils/auth"
-
+  // import api from "../../utils/auth"
+  import { gets,getFileName,downloadNode } from "../../api/api";
   export const downloadFile = (url) => {
     const iframe = document.createElement("iframe");
     iframe.style.display = "none";  // 防止影响页面
     iframe.style.height = 0;  // 防止影响页面
     iframe.src = url;
     document.body.appendChild(iframe);  // 这一行必须，iframe挂在到dom树上才会发请求
-    // 5分钟之后删除（onload方法对于下载链接不起作用，就先抠脚一下吧）
     setTimeout(() => {
       iframe.remove();
     }, 5 * 60 * 1000);
@@ -93,17 +92,26 @@
     },
     methods: {
       singeDownloadFile(uuid) {
-        downloadFile('http://202.120.167.50:8088/api/u/fdb/task/' + uuid);
+        downloadNode().then(res=>{
+          this.$message.success('成功下载');
+        })
+        // downloadFile('http://202.120.167.50:8088/api/u/fdb/task/' + uuid);
       },
       previewer(uuid) {
-        window.open("http://202.120.167.50:8088/api/u/fdb/task/content/" + uuid, '_blank');
+        // const { href } = this.$router.resolve({
+        //   path: '/api/u/fdb/task/content/'
+        // });
+        // http://view.officeapps.live.com/op/view.aspx?src=
+        window.open("/api/u/fdb/task/content/" + uuid, '_blank');
+        // window.open(href + uuid, '_blank');
+
       },
       reset() {
         this.$refs.create.resetFields();
       },
       getUser() {
         let self = this
-        api._gets(self.$route.params.id).then(res => {
+        gets(self.$route.params.id).then(res => {
           self.user = res;
           console.log(res);
           self.user.categoryid = String(res["categoryid"]);
@@ -120,7 +128,7 @@
       getFileName() {
         // console.log(this.user.nodeid,11111111);
         let self = this
-        api._getFileName(this.user.nodeid).then(res => {
+        getFileName(this.user.nodeid).then(res => {
           this.file_list = res
           // console.log(this.filename);
           this.isShowPdf = true
