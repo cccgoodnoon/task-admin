@@ -65,7 +65,6 @@
 
 </template>
 <script>
-  // import api from "../../utils/auth"
   import { gets,getFileName,downloadNode } from "../../api/api";
   export const downloadFile = (url) => {
     const iframe = document.createElement("iframe");
@@ -98,12 +97,7 @@
         // downloadFile('http://202.120.167.50:8088/api/u/fdb/task/' + uuid);
       },
       previewer(uuid) {
-        // const { href } = this.$router.resolve({
-        //   path: '/api/u/fdb/task/content/'
-        // });
-        // http://view.officeapps.live.com/op/view.aspx?src=
         window.open("/api/u/fdb/task/content/" + uuid, '_blank');
-        // window.open(href + uuid, '_blank');
 
       },
       reset() {
@@ -119,18 +113,15 @@
           self.user.nodeid = res['nodeid']
           if (self.user.nodeid != null && self.user.nodeid != 'None') {
             this.getFileName();
-            // this.getFileLink("fileone");
           }
         }, err => {
           console.log(err);
         })
       },
       getFileName() {
-        // console.log(this.user.nodeid,11111111);
         let self = this
         getFileName(this.user.nodeid).then(res => {
           this.file_list = res
-          // console.log(this.filename);
           this.isShowPdf = true
         })
       },
@@ -138,7 +129,6 @@
         this.$router.replace('/task/list');
       },
       matchType(filename) {
-        // console.log(this.filename);
         var suffix = ''
         var result = ''
         try {

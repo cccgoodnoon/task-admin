@@ -66,7 +66,6 @@
       },
       previewer(uuid) {
         window.open("/api/u/fdb/task/content/" + uuid, '_blank');
-        // window.open("http://202.120.167.50:8088/api/u/fdb/task/content/" + uuid, '_blank');
       },
       getFileLink(p) {
         this.filePath =
