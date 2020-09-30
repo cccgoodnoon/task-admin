@@ -36,14 +36,12 @@
     </el-form-item>
     <el-form-item label="附件">
       <el-row>
-        <el-col :span="8" v-for="item in this.file_list">
+        <el-col :span="8" v-for="(item,index) in this.file_list" :key=index class="file-list">
           <div class="avatar-uploader">
             <img width="40" height="40" :src="require('../../assets/file/'+matchType(item.filename)+'.png')">
-            <p>{{item.filename}}</p>
+            <p style="margin-bottom:6px;text-align: left;width:100px">{{item.filename}}</p>
           </div>
-          <!-- 预览/删除遮罩 -->
           <div class="mask">
-            <!--预览 -->
             <a @click="previewer(item.uuid)" target="_blank" title="点击预览">
               <i class="el-icon-zoom-in"></i>
             </a>
@@ -65,7 +63,7 @@
 
 </template>
 <script>
-  import { gets,getFileName,downloadNode } from "../../api/api";
+  import { getOneTask,getFileName,downloadNode } from "../../api/api";
   export const downloadFile = (url) => {
     const iframe = document.createElement("iframe");
     iframe.style.display = "none";  // 防止影响页面
@@ -105,7 +103,7 @@
       },
       getUser() {
         let self = this
-        gets(self.$route.params.id).then(res => {
+        getOneTask(self.$route.params.id).then(res => {
           self.user = res;
           console.log(res);
           self.user.categoryid = String(res["categoryid"]);
@@ -229,5 +227,13 @@
   .mask {
     padding-left: 12px;
     float: left;
+  }
+
+  .file-list {
+    display: inline-block;
+    padding: 5px 15px 30px 10px;
+    vertical-align: top;
+    font-size: 14px;
+    white-space:break-word;
   }
 </style>

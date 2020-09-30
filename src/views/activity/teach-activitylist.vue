@@ -187,7 +187,7 @@
     } from 'vuex';
     // import api from '../api/service.js'
     import api from "../../utils/auth"
-    import { geta,post,remove,update,removes } from "../../api/api";
+    import { getAllActivity,postNewActivity,removeOneTask,updateOneTask,removeActivity } from "../../api/api";
     export default {
         name:'',
         data : function () {
@@ -344,7 +344,7 @@
             //获取任务数据
             getActivities(){
                 let self = this
-                geta().then(res => {
+                getAllActivity().then(res => {
                     self.activities  = res;
                     // console.log(res.data);
                     // console.log(res,8888);
@@ -363,7 +363,7 @@
             createActivity() {
                 this.$refs.create.validate((valid) => {
                     if (valid) {
-                        post(this.create).then(res => {
+                        postNewActivity(this.create).then(res => {
                             this.$message.success('创建课程分配成功！');
                             this.dialogCreateVisible = false;
                             this.createLoading = false;
@@ -389,7 +389,7 @@
             updateActivity() {
                 this.$refs.update.validate((valid) => {
                     if (valid) {
-                        update(this.currentId, this.update).then(res => {
+                        updateOneTask(this.currentId, this.update).then(res => {
                             this.$message.success('修改课程分配成功！');
                             this.dialogUpdateVisible = false;
                             this.getActivities();
@@ -413,7 +413,7 @@
                 this.$confirm('是否要删除改课程分配 ' + activity.title + ' ?', '提示', {
                   type: 'warning'
                 }).then(() => {
-                    remove(activity).then(res => {
+                    removeOneTask(activity).then(res => {
                         this.$message.success('成功删除了该课程分配' + activity.title + ' !');
                         this.getActivities();
                         console.log(activity.id);
@@ -430,7 +430,7 @@
                 this.$confirm('此操作将永久删除 ' + this.selected.length + ' 个课程分配, 是否继续?', '提示', {
                     type: 'warning'
                 }).then(() => {
-                    removes().then(res =>{
+                    removeActivity().then(res =>{
                         this.$message.success('删除了' + this.selected.length + '个任务!');
                         this.getActivities();
                     }).catch((res) => {

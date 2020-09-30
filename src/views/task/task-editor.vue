@@ -109,7 +109,7 @@
   // import api from "../../utils/auth";
   // import CONFIG_API_BASE_URL from "../../conf/config";
   // import axios from "axios";
-  import { gets,update,getFileName,removeNode } from "../../api/api";
+  import { getOneTask,updateOneTask,getFileName,removeNode } from "../../api/api";
   import service from '@/utils/request';
   export const downloadFile = (url) => {
     const iframe = document.createElement("iframe");
@@ -220,7 +220,7 @@
       },
       getUser() {
         let self = this;
-        gets(self.$route.params.id).then(
+        getOneTask(self.$route.params.id).then(
           res => {
             self.update = res;
             self.update.state = String(res["state"]);
@@ -238,7 +238,7 @@
         );
       },
       updateUser() {
-        update(this.$route.params.id, this.update).then(res => {
+        updateOneTask(this.$route.params.id, this.update).then(res => {
           this.$message({
             message: "任务修改成功",
             type: "success"

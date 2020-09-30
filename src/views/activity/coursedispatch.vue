@@ -133,7 +133,7 @@
 </template>
 
 <script>
-    import { getOM,getOC,getM,getC,getA,posta,removea,updatea } from "../../api/api";
+    import { getOneMember,getOneCourse,getAllMember,getAllCourse,getOneActicity,postNewActivity,removeOneActivity,updateOneActivity } from "../../api/api";
     import {
         mapState,
         mapMutations,
@@ -236,7 +236,7 @@
             },           
             handleMember(row, event, column) {
                 this.$refs.memberTable.toggleRowSelection(row);
-                getOM(row.id).then(res => {
+                getOneMember(row.id).then(res => {
                     this.member_uuid = res[0].uuid;
                     this.getActivity(this.member_uuid);
                 })
@@ -244,7 +244,7 @@
             },
             handleCourse(row, event, column) {
                 this.$refs.courseTable.toggleRowSelection(row)
-                getOC(row.id).then(res => {
+                getOneCourse(row.id).then(res => {
                     this.course_uuid = res[0].uuid;
                 })
             },
@@ -258,7 +258,7 @@
             },
             getMember(){
                 let self = this
-                getM().then(res => {
+                getAllMember().then(res => {
                     // console.log(res);
                     self.member = res;
                 },err => {
@@ -267,7 +267,7 @@
             },
             getCourse(){
                 let self = this
-                getC().then(res => {
+                getAllCourse().then(res => {
                     self.course = res;
                 },err => {
                     console.log(err);
@@ -275,7 +275,7 @@
             },            
             getActivity(id){
                 let self = this
-                getA(this.member_uuid).then(res =>{
+                getOneActicity(this.member_uuid).then(res =>{
                     self.activity = res;
                 },err => {
                     console.log(err);
@@ -283,7 +283,7 @@
             },
             addActivity(){
                 if(this.course_uuid != ''&&this.member_uuid != ''&&this.timeValue != ''&&this.objectvalue !=''){
-                    posta({course_uuid:this.course_uuid,course_credit:this.course_credit,member_uuid:this.member_uuid,timeValue:this.timeValue,objectvalue:this.objectvalue}).then(res =>{
+                    postNewActivity({course_uuid:this.course_uuid,course_credit:this.course_credit,member_uuid:this.member_uuid,timeValue:this.timeValue,objectvalue:this.objectvalue}).then(res =>{
                         this.$message.success('成功为该老师添加一门课！');
                         this.getCourse();
                         this.getActivity();
@@ -304,7 +304,7 @@
                 this.$confirm('此操作将删除该老师的 ' + this.actiSelected.length + ' 门课程, 是否继续?','提示', {
                   type: 'warning'
                 }).then(() => {
-                    removea(this.uuid).then(res => {
+                    removeOneActivity(this.uuid).then(res => {
                         this.$message.success('成功删除了课程!');
                         this.getActivity();
                     }).catch((res) => {
@@ -317,7 +317,7 @@
             updateState(){
                 this.$refs.update.validate((valid) => {
                     if (valid) {
-                        updatea(this.currentId, this.update).then(res => {
+                        updateOneActivity(this.currentId, this.update).then(res => {
                             this.$message.success('修改课程状态成功！');
                             this.dialogUpdateVisible = false;
                             this.getActivity();

@@ -1,11 +1,11 @@
 import service from './../utils/request'
 
 
-let get = async () => {
+let getAllTask = async () => {
     return await service.get('/api/admin/task/tasks')
 }
 
-let gets = async (params) => {
+let getOneTask = async (params) => {
     return await service.get('/api/admin/task/tasks/'+params)
 }
 
@@ -13,52 +13,52 @@ let getByAuth = async (id) => {
     return await service.get('/api/admin/task/tasks/byauth/' + id)
 }
 
-let post = async (params) => {
+let postNewTask = async (params) => {
     return await service.post('/api/admin/task/tasks/new', params)
 }
 
-let update = async (id,params) => {
+let updateOneTask = async (id,params) => {
     return await service.put('/api/admin/task/tasks/v/'+ id, params)
 }
 
-let remove = async (user) => {
+let removeOneTask = async (user) => {
     var userid = user.id;
     return await service.delete('/api/admin/task/tasks/e/' + userid)
 }
 
-let getM = async () => {
+let getAllMember = async () => {
     return await service.get('/api/u/member')
 }
 
-let getOM = async (id) => {
+let getOneMember = async (id) => {
     return await service.get('/api/u/member/'+ id)
 }
 
-let getC = async () => {
+let getAllCourse = async () => {
     return await service.get('/api/u/course')
 }
 
-let getOC = async (id) => {
+let getOneCourse = async (id) => {
     return await service.get('/api/u/course/'+ id)
 }
 
-let geta = async () => {
+let getAllActivity = async () => {
     return await service.get('/api/u/activity')
 }
 
-let getA = async (id) => {
+let getOneActicity = async (id) => {
     return await service.get('/api/u/activity/'+ id)
 }
 
-let posta = async (params) => {
+let postNewActivity = async (params) => {
     return await service.post('/api/u/activity', params)
 }
 
-let updatea = async (id,params) => {
+let updateOneActivity = async (id,params) => {
     return await service.post('/api/u/activity/state/'+ id, params)
 }
 
-let removea = async (uuid) => {
+let removeOneActivity = async (uuid) => {
     return await service.delete('/api/u/activity/' + uuid)
 }
 
@@ -95,21 +95,21 @@ let getFileName = async (uuid) => {
 }
 
 export {
-    get,
-    gets,
+    getAllTask,
+    getOneTask,
     getByAuth,
-    post,
-    update,
-    remove,
-    getM,
-    getOM,
-    getC,
-    getOC,
-    getA,
-    posta,
-    updatea,
-    removea,
-    geta,
+    postNewTask,
+    updateOneTask,
+    removeOneTask,
+    getAllMember,
+    getOneMember,
+    getAllCourse,
+    getOneCourse,
+    getAllActivity,    
+    getOneActicity,
+    postNewActivity,
+    updateOneActivity,
+    removeOneActivity,
     getReport2,
     getReport3,
     removeNode,

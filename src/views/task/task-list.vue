@@ -110,7 +110,7 @@
 <script>
 import { mapState, mapMutations, mapGetters, mapActions } from "vuex";
 // import api from "../../utils/auth";
-import { getByAuth,remove } from "../../api/api";
+import { getByAuth,removeOneTask } from "../../api/api";
 export default {
   filters: {
     getStateName(state) {
@@ -212,7 +212,7 @@ export default {
         });
     },
     handleDelete(index, row) {
-      remove(row).then(res => {
+      removeOneTask(row).then(res => {
         this.users.splice(index, 1);
         this.getTasks();
       });

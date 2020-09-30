@@ -32,7 +32,7 @@
   // - 调用服务端restful接口并从服务端取得attachments数据，以list风格显示。包括文件名、大小、上传日期
   // - 支持如下操作：download、open和删除。如果readonly为true，则隐掉删除按钮。
   //
-  import { gets,getFileName } from "../../api/api";
+  import { getOneTask,getFileName } from "../../api/api";
   import "../../service/foundation"
   // import api from "../../utils/auth"
 
@@ -51,7 +51,7 @@
     methods: {
       getUser() {
         let self = this
-        gets(self.$route.params.id).then(res => {
+        getOneTask(self.$route.params.id).then(res => {
           // self.user = res;
           // console.log(res);
           // self.user.state = String(res['state'])
