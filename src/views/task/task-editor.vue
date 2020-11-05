@@ -223,6 +223,7 @@
         getOneTask(self.$route.params.id).then(
           res => {
             self.update = res;
+            // console.log(res)
             self.update.state = String(res["state"]);
             self.update.categoryid = String(res["categoryid"]);
             self.update.nodeid = res["nodeid"];

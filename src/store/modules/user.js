@@ -46,7 +46,7 @@ const actions = {
         // console.log("拿到token")
         // console.log(data['token'])
         // commit('SET_TOKEN', data.token)
-        console.log(data);
+        // console.log(data);
         commit('SET_TOKEN', data['token'].token)
         commit('SET_MEMBERLEVEL', data['token'].securitylevel)      
         // setToken(data.token)    // 在auth.js封装了setToken，登录成功后将token存储在cookie之中

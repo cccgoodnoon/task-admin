@@ -108,6 +108,7 @@
     </el-form-item>
   </el-form>
 </template>
+
 <script>
 import { mapMutations } from "vuex";
 import api from "../../utils/auth";
@@ -170,11 +171,11 @@ export default {
       PdfViewerTwo: "javascript:;"
     };
   },
-  // components: { pdf },
   activated() {
     const fileList = this.$store.state.duty.fileList;
     if (fileList && fileList.length > 0) {
       this.create.fileList = fileList;
+      //将文件上传页面暂存的文件读取出来
     }
   },
   mounted() {
@@ -192,7 +193,7 @@ export default {
       setFileList: "duty/setFileList"
     }),
     submit() {
-      this.createUser();
+      this.createTask();
     },
     chooseFile() {
       this.$router.push("/task/attachments/new");
@@ -207,7 +208,7 @@ export default {
     // 		console.log(err);
     // 	})
     // },
-    async createUser() {
+    async createTask() {
       // 首先上传文件
       const fileList = this.create.fileList;
       const promiseAll = fileList.map(item => {
@@ -239,7 +240,7 @@ export default {
         }
         data.isFile = fileList.length > 0 ? 1 : 0;
         data.nodeid = uuids;
-
+        console.log(uuids)
         res = await axios({
           url: '/api/admin/task/tasks/new',
           method: 'post',
@@ -256,54 +257,54 @@ export default {
     handleCancel() {
       this.$router.replace("/task/list");
     },
-    add() {
-      this.$refs.upload.submit();
-    },
-    addt() {
-      this.$refs.uploadTwo.submit();
-    },
+    // add() {
+    //   this.$refs.upload.submit();
+    // },
+    // addt() {
+    //   this.$refs.uploadTwo.submit();
+    // },
     // 成功上传文件
-    upFile(response, file, fileList) {
-      console.log(response);
-      console.log(file);
-      console.log(fileList);
-      console.log(fileList[0].name);
-      // console.log(fileList[1].name);
-      this.filename = fileList[0].name;
-      let self = this;
-      if (response.status == 201) {
-        this.$message.success("上传成功");
-        self.nodeid = response.nodeid;
-        this.create.isFile = 1;
-        // console.log(this.create.isFile,"上传文件之后");
-        this.getFileLink("fileone");
-        this.isShowPdf = true;
-      }
-    },
-    upFileTwo(response, file, fileList) {
-      this.filenameTwo = fileList[0].name;
-      let self = this;
-      if (response.status == 201) {
-        this.$message.success("上传成功");
-        console.log(response.nodeid, 111111);
-        self.nodeid = response.nodeid;
-        this.getFileLink("filetwo");
-        this.isShowPdfTwo = true;
-      }
-    },
+    // upFile(response, file, fileList) {
+    //   console.log(response);
+    //   console.log(file);
+    //   console.log(fileList);
+    //   console.log(fileList[0].name);
+    //   // console.log(fileList[1].name);
+    //   this.filename = fileList[0].name;
+    //   let self = this;
+    //   if (response.status == 201) {
+    //     this.$message.success("上传成功");
+    //     self.nodeid = response.nodeid;
+    //     this.create.isFile = 1;
+    //     // console.log(this.create.isFile,"上传文件之后");
+    //     this.getFileLink("fileone");
+    //     this.isShowPdf = true;
+    //   }
+    // },
+    // upFileTwo(response, file, fileList) {
+    //   this.filenameTwo = fileList[0].name;
+    //   let self = this;
+    //   if (response.status == 201) {
+    //     this.$message.success("上传成功");
+    //     console.log(response.nodeid, 111111);
+    //     self.nodeid = response.nodeid;
+    //     this.getFileLink("filetwo");
+    //     this.isShowPdfTwo = true;
+    //   }
+    // },
     // 处理PDF预览路径    参数p是key
-    getFileLink(p) {
-      this.filePath = "/api/u/fdb/task/" + this.nodeid + "/content";
-      console.log(this.filePath, "url");
-      switch (p) {
-        case "fileone":
-          this.PdfViewer = this.filePath;
-          break;
-        case "filetwo":
-          this.PdfViewerTwo = this.filePath;
-          break;
-      }
-    },
+    // getFileLink(p) {
+    //   this.filePath = "/api/u/fdb/task/" + this.nodeid + "/content";
+    //   console.log(this.filePath, "url");
+    //   switch (p) {
+    //     case "fileone":
+    //       this.PdfViewer = this.filePath;
+    //       break;
+    //     case "filetwo":
+    //       this.PdfViewerTwo = this.filePath;
+    //       break;
+    //   }
+    // },
     removeFile(e) {
       switch (e) {
         case "fileone":
@@ -314,36 +315,36 @@ export default {
           break;
       }
     },
-    beforeImageUpload(file) {
-      // const isTYPE = file.type === 'txt/pdf/png/jpg/jpeg/gif/doc/docx/xls/xlsx/ppt/pptx/mp4/zip/rar';
-      console.log(file.size);
-      const isLt20M = file.size / 1024 / 1024 < 20;
-      console.log(isLt20M);
+    // beforeImageUpload(file) {
+    //   // const isTYPE = file.type === 'txt/pdf/png/jpg/jpeg/gif/doc/docx/xls/xlsx/ppt/pptx/mp4/zip/rar';
+    //   console.log(file.size);
+    //   const isLt20M = file.size / 1024 / 1024 < 20;
+    //   console.log(isLt20M);
 
-      // if (!isTYPE) {
-      // this.$message.error('请选择正确的文件格式!');
-      // }
-      if (!isLt20M) {
-        this.$message.error("上传文件大小不能超过 20MB!");
-      }
-      return isLt20M;
-    },
-    uploadFalse(response, file, fileList) {
-      console.log(response);
-      this.$message.error(response.message.slice(1, -2));
-      //后台错误信息
-    },
+    //   // if (!isTYPE) {
+    //   // this.$message.error('请选择正确的文件格式!');
+    //   // }
+    //   if (!isLt20M) {
+    //     this.$message.error("上传文件大小不能超过 20MB!");
+    //   }
+    //   return isLt20M;
+    // },
+    // uploadFalse(response, file, fileList) {
+    //   console.log(response);
+    //   this.$message.error(response.message.slice(1, -2));
+    //   //后台错误信息
+    // },
     // 上传文件超出个数
-    handleExceed(files, fileList) {
-      this.$message.warning(`当前只能选择上传1 个文件`);
-    },
+    // handleExceed(files, fileList) {
+    //   this.$message.warning(`当前只能选择上传1 个文件`);
+    // },
     // 移除文件
-    handleRemove(res, file, fileList) {
-      if (file && file.status === "success") {
-        this.$message.warning(`移除当前${res.name}文件，请重新选择文件上传！`);
-        this.removeFile("fileone");
-      }
-    },
+    // handleRemove(res, file, fileList) {
+    //   if (file && file.status === "success") {
+    //     this.$message.warning(`移除当前${res.name}文件，请重新选择文件上传！`);
+    //     this.removeFile("fileone");
+    //   }
+    // },
     // changePdfPage (val) {
     // 	// console.log(val)
     // 	if (val === 0 && this.currentPage > 1) {
@@ -357,9 +358,9 @@ export default {
     // },
 
     // pdf加载时
-    loadPdfHandler(e) {
-      this.currentPage = 1; // 加载的时候先加载第一页
-    },
+    // loadPdfHandler(e) {
+    //   this.currentPage = 1; // 加载的时候先加载第一页
+    // },
     matchType(filename) {
       var suffix = "";
       var result = "";

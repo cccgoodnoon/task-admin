@@ -141,8 +141,25 @@ http://47.111.222.116/openedu/admin/#/task/create
  
 
  
+2020.06.14
+假定
+AppRootUrl = http://47.111.222.116/openedu/admin
 
- 
+对应到Task模块
+显示Task主界面
+http://47.111.222.116/openedu/admin/#/task/
+
+查看任务详情
+http://47.111.222.116/openedu/admin/#/task/{id}
+本质上就是调用taskviewer显示详情，尽管URL中没有出现viewer字样
+
+显示新增或编辑任务
+http://47.111.222.116/openedu/admin/#/task/new
+http://47.111.222.116/openedu/admin/#/task/{id}/editor
+
+上传文件页面
+http://47.111.222.116/openedu/admin/#/task/new/uploader
+http://47.111.222.116/openedu/admin/#/task/{id}/editor/uploader
 
  
 

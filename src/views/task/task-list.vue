@@ -171,7 +171,7 @@ export default {
       this.listLoading = true;
       
       this.securitylevel = parseInt(this.$store.state.user.securitylevel)
-      console.log(this.securitylevel);
+      // console.log(this.securitylevel);
       // get().then(
       //   res => {
       //     self.users = res;

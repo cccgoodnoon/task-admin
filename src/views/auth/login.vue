@@ -136,7 +136,7 @@ export default {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
-            console.log('登录成功')
+            // console.log('登录成功')
             this.$router.push({ path: this.redirect || '/' })   // 登录成功之后重定向到首页
             this.loading = false
           }).catch((err) => {

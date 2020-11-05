@@ -65,26 +65,27 @@
       ...mapMutations({
         setFileList: 'duty/setFileList'
       }),
+      //附件上传
+      //确认
       confirm() {
         this.setFileList(this.fileList);
         if (this.$route.query.nodeid != null) {
           this.$refs.upload.submit();
           setTimeout(this.$router.back(),1000)
-          // this.$router.back();
         } else {
           this.$router.back();
         }
       },
-      getURL() {
-        this.uploadFileURL = "/api/u/fdb/task/updatefile/" + this.$route.query.nodeid
-      },
+      //取消
       cancel() {
         this.$router.back();
+      },
+      getURL() {
+        this.uploadFileURL = "/api/u/fdb/task/updatefile/" + this.$route.query.nodeid
       },
       handleChooseFile(file, fileList) {
         this.fileList = fileList;
       },
-
       // 上传文件超出个数
       handleExceed(files, fileList) {
         this.$message.warning(`当前只能选择上传1 个文件`);

@@ -1,5 +1,3 @@
-
-
 // author zhangwei on 2020.04.25
 //
 // All configuration variables should be defined in this module. so that we can
@@ -12,5 +10,8 @@
 
 // To configure the remote server.
 var CONFIG_API_BASE_URL = "http://127.0.0.1:5000/api/"
+
+//47.111.234.116:8080
+//127.0.0.1:5000
 
 export default {CONFIG_API_BASE_URL}
