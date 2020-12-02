@@ -155,7 +155,6 @@
     },
     methods: {
       multiDelete() {
-
         for (let item in this.$refs.test.selection) {
           let uuid = this.tables[item].uuid;
           let curname = this.tables[item].curname;
@@ -178,8 +177,6 @@
           })
         }
       },
-
-
       tableSelectionChange(val) {
         this.selected = val;
       },
